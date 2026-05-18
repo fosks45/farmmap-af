@@ -32,7 +32,7 @@ export function generateListingMetadata(listing: ListingDetail): Metadata {
       title: `${listing.name} — Farmmap`,
       description,
       url,
-      type: 'place',
+      type: 'website',
       locale: listing.country_code === 'IE' ? 'en_IE' : 'en_GB',
       images: primaryPhoto
         ? [

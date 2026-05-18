@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useCallback, useState } from 'react'
-import type { Map as MapLibreMap, GeoJSONSource, MapMouseEvent } from 'maplibre-gl'
+import type { Map as MapLibreMap, GeoJSONSource, MapMouseEvent, MapLayerMouseEvent } from 'maplibre-gl'
 import type { ListingGeoFeature } from '@/lib/types'
 import { colours, pinConfig, listingTypeConfig, type PinTier, type ListingType } from '@/lib/tokens'
 import { ListingPanel } from './ListingPanel'
@@ -231,17 +231,17 @@ export default function FarmmapMap() {
         if (!features.length) return
         const clusterId = features[0].properties?.cluster_id
         const source = map.getSource('listings') as GeoJSONSource
-        source.getClusterExpansionZoom(clusterId, (err, zoom) => {
-          if (err || !zoom) return
+        source.getClusterExpansionZoom(clusterId).then((zoom) => {
+          if (!zoom) return
           map.easeTo({
             center: (features[0].geometry as GeoJSON.Point).coordinates as [number, number],
             zoom,
           })
-        })
+        }).catch(() => { /* cluster source not ready */ })
       })
 
       // Click on individual pin: open listing panel
-      map.on('click', 'unclustered-pin', (e: MapMouseEvent) => {
+      map.on('click', 'unclustered-pin', (e: MapLayerMouseEvent) => {
         const feature = e.features?.[0] as ListingGeoFeature | undefined
         if (!feature) return
         const props = feature.properties
@@ -302,24 +302,20 @@ export default function FarmmapMap() {
     const map = mapRef.current
     if (!map || !isLoaded) return
 
-    const filterExpr: maplibregl.FilterSpecification[] = ['!', ['has', 'point_count']]
+    const notCluster: maplibregl.FilterSpecification = ['!', ['has', 'point_count']]
 
-    if (filters.listingType !== 'all') {
-      ;(filterExpr as unknown[]).push(['==', ['get', 'listing_type'], filters.listingType])
-    }
+    const combined: maplibregl.FilterSpecification = filters.listingType !== 'all'
+      ? ['all', notCluster, ['==', ['get', 'listing_type'], filters.listingType]]
+      : notCluster
 
-    const combined = filterExpr.length > 1
-      ? ['all', ...filterExpr]
-      : filterExpr[0]
+    const honestyFilter: maplibregl.FilterSpecification = filters.listingType !== 'all'
+      ? ['all', notCluster, ['==', ['get', 'listing_type'], 'honesty_box'], ['==', ['get', 'listing_type'], filters.listingType]]
+      : ['all', notCluster, ['==', ['get', 'listing_type'], 'honesty_box']]
 
     try {
-      map.setFilter('unclustered-pin', combined as maplibregl.FilterSpecification)
-      map.setFilter('unclustered-pin-halo', combined as maplibregl.FilterSpecification)
-      map.setFilter('honesty-stocked-indicator', [
-        'all',
-        combined as maplibregl.FilterSpecification,
-        ['==', ['get', 'listing_type'], 'honesty_box'],
-      ])
+      map.setFilter('unclustered-pin', combined)
+      map.setFilter('unclustered-pin-halo', combined)
+      map.setFilter('honesty-stocked-indicator', honestyFilter)
     } catch {
       // Map may not be fully initialised yet
     }

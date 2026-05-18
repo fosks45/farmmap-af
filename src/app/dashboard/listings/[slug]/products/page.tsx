@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { TIER_CONFIG } from '@/lib/tokens'
-import type { Product, SubscriptionTier } from '@/lib/types'
+import type { Product } from '@/lib/types'
+import type { SubscriptionTier } from '@/lib/tokens'
 
 export const metadata: Metadata = { title: 'Products — Farmmap' }
 

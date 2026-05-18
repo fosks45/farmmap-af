@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { createClient as createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/supabase/admin'
 import {
   generateListingMetadata,
   buildListingStructuredData,
@@ -79,7 +79,7 @@ export async function generateStaticParams() {
       .eq('is_active', true)
       .limit(500)
 
-    return (data ?? []).map((l) => {
+    return (data ?? []).map((l: { slug: string; listing_type: string; address: unknown }) => {
       const typeSlug = listingTypeConfig[l.listing_type as keyof typeof listingTypeConfig]?.slug ?? 'farm-shop'
       const addr = l.address as { country: string; county: string }
       return {
