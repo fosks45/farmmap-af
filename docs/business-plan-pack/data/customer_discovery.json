@@ -1,0 +1,155 @@
+{
+  "problem_hypotheses": [
+    "Consumers cannot reliably find farm shops and honesty boxes near them using existing tools",
+    "43% of UK adults value locally produced food (FSA Food and You 2, Wave 7, 2024) but the top barrier to visiting is 'don't know where to find one' (FRA Consumer Research 2023)",
+    "Farm shops lose potential customers because 66% have no website and are invisible to digital discovery (FRA Digital Adoption Survey 2022)",
+    "Honesty boxes have no authoritative, browsable map anywhere in the UK — the only existing map (yourhonestybox.com) covers Ireland and NI only",
+    "Google Maps carries stale or incorrect data for 43% of farm shops (AHDB Farm Business Survey 2023)"
+  ],
+  "segment_hypotheses": [
+    {
+      "segment": "Consumer — Weekend Forager (P1)",
+      "hypothesis": "ABC1 adults aged 35–65 with rural or semi-rural access want to discover farm shops and honesty boxes impulsively while driving or planning a day out, but have no reliable tool",
+      "evidence_status": "strong",
+      "source": "FSA Food and You 2 Wave 7 2024: 22.3m UK adults value local food; FRA Consumer Research 2023: discovery friction is top barrier"
+    },
+    {
+      "segment": "Consumer — Ethical Foodie (P2)",
+      "hypothesis": "Younger (18–35) urban and peri-urban adults with strong food provenance values are underserved by generic maps and will use a specialist directory for pre-trip planning",
+      "evidence_status": "partial",
+      "source": "FARMA: farmers market footfall grew 12% in 2023 driven by 18–35 attendance; Riverford annual impact report 2023"
+    },
+    {
+      "segment": "Farm Shop Owner — Reluctant Digitaliser (P3)",
+      "hypothesis": "Owner-operators aged 50–70 with no web presence will claim a free listing if the process requires minimal effort and the value (visibility) is demonstrated before any fee is asked",
+      "evidence_status": "partial",
+      "source": "FRA Digital Adoption Survey 2022 (66% no website); saleability-critique.md §1 — prior directory scepticism documented"
+    },
+    {
+      "segment": "Farm Shop Owner — Digital-Native Entrepreneur (P4)",
+      "hypothesis": "Digitally engaged owners aged 30–45 already on Shopify or Instagram will adopt Bronze quickly once traffic data is available, and progress to Silver when Farmmap demonstrably drives incremental GMV",
+      "evidence_status": "inference",
+      "source": "Pricing hypothesis: Silver break-even at £1,500 GMV/month; analytics dashboard is the conversion lever"
+    },
+    {
+      "segment": "Cooperative / Organisation (P6)",
+      "hypothesis": "Rural cooperatives managing multiple member farm listings represent a future enterprise tier signal; their onboarding requires batch claim workflows not available at V1",
+      "evidence_status": "signal",
+      "source": "P6 Brigid O'Sullivan persona; LEADER programme cooperation in Irish market"
+    }
+  ],
+  "willingness_to_pay_hypotheses": [
+    {
+      "segment": "Bronze farm shop owners",
+      "hypothesis": "£20/month is below the hesitation threshold for small rural businesses and is defensible on a value-delivery ratio of 2.5× (even worst-case 3 new customers/year at £200 gross profit each exceeds Bronze cost)",
+      "evidence_status": "partial",
+      "source": "Pricing hypothesis: £20 below Yell (£50–200/mo) and Checkatrade (£39–72/mo); value-bench.md worst case gross profit per 3 new customers = £600 vs £240 annual Bronze cost"
+    },
+    {
+      "segment": "Silver farm shop owners",
+      "hypothesis": "£60/month + 3% commission is competitive vs Shopify Basic (£25/mo + transaction fees) when Farmmap provides the consumer audience; break-even at approximately £1,500 GMV/month",
+      "evidence_status": "inference",
+      "source": "Pricing hypothesis §2: Silver vs Bronze+Shopify comparison; value-bench.md Silver unit LTV £9,166"
+    },
+    {
+      "segment": "Gold farm shop owners",
+      "hypothesis": "£100/month + 5% commission is justifiable as a done-for-you marketing service (comparable social media retainers cost £500–£1,500/month); 5% commission becomes a retention risk above £8,000/month GMV",
+      "evidence_status": "inference",
+      "source": "Pricing hypothesis §3; viability-gate.md condition: gold-commission-cap"
+    }
+  ],
+  "channel_hypotheses": [
+    {
+      "channel": "FRA partnership (warm referral)",
+      "hypothesis": "An FRA endorsement converts cold outreach to warm referral at approximately 3× the conversion rate for Bronze subscriptions",
+      "evidence_status": "inference",
+      "source": "viability-gate.md fra-relationship condition; saleability-critique.md §1"
+    },
+    {
+      "channel": "Traffic-triggered email",
+      "hypothesis": "Sending an owner an automated email when their listing crosses a traffic threshold (e.g., 50 views in 30 days) reaches them at peak receptivity and provides evidence before asking for money",
+      "evidence_status": "hypothesis",
+      "source": "go-to-market-summary.md Phase 2; business_model_canvas.json channels"
+    },
+    {
+      "channel": "Organic search (SEO)",
+      "hypothesis": "farmmap.co.uk exact-match domain + 953 indexed listing pages + county landing pages will rank for 'farm shop near me' and related queries and drive 100,000 monthly visitors within 12 months",
+      "evidence_status": "partial",
+      "source": "tam-sam-som.md SOM V1; viability-gate.md condition: seo-content-programme"
+    },
+    {
+      "channel": "Agricultural shows (direct sales)",
+      "hypothesis": "Live map demonstrations at agricultural shows (Balmoral, Royal Highland, county shows) convert reluctant digitalisers at 20–30% because the founder can show the owner their own listing in real time",
+      "evidence_status": "inference",
+      "source": "saleability-critique.md §1: personal visits convert at 20–30% but cost £80–£150 each"
+    }
+  ],
+  "primary_research_completed": [
+    {
+      "method": "Secondary research — trade body surveys",
+      "sample_size": null,
+      "audience": "UK farm shop owners",
+      "key_findings": "FRA Digital Adoption Survey 2022: 66% of UK farm shops have no website; FRA Consumer Research 2023: 'don't know where to find one' is top consumer barrier",
+      "source_id": "src-fra-digital"
+    },
+    {
+      "method": "Secondary research — government consumer survey",
+      "sample_size": null,
+      "audience": "UK adults",
+      "key_findings": "FSA Food and You 2 Wave 7 2024: 43% of UK adults value locally produced food (22.3 million adults)",
+      "source_id": "src-fsa-foodandyou"
+    },
+    {
+      "method": "Secondary research — competitor analysis",
+      "sample_size": null,
+      "audience": "yourhonestybox.com (Ireland/NI honesty box directory)",
+      "key_findings": "336 Irish/NI listings obtained with explicit consent; yourhonestybox.com has no commercial model, no UK scope, no farm shop listings",
+      "source_id": "src-yourhonestybox"
+    },
+    {
+      "method": "Secondary research — Companies House filing",
+      "sample_size": null,
+      "audience": "BigBarn Network Ltd",
+      "key_findings": "~£45k net assets; micro-entity; 24-year technical debt; not resourced for major rebuild",
+      "source_id": "src-bigbarn-ch"
+    }
+  ],
+  "validation_status": "partial",
+  "evidence_gaps": [
+    "No primary customer interviews with farm shop owners conducted — saleability critique is based on published surveys and expert inference, not direct interviews",
+    "No consumer demand testing via a waitlist landing page; FSA data confirms intent but not conversion",
+    "Willingness to pay for Bronze not tested with real farm shop owners in a controlled setting",
+    "Silver GMV assumption (£800–£1,800/month per shop) has no comparable UK farm shop e-commerce data; directly analogous data unavailable",
+    "Claim rate (15% at Month 12) and conversion rate (6% base case) are modelled assumptions not validated with a pilot cohort"
+  ],
+  "recommended_tests": [
+    {
+      "test_name": "Farm shop owner interviews (n=15)",
+      "purpose": "Validate Bronze price sensitivity, objection handling for Facebook/Google-is-free, and the analytics dashboard as the conversion lever",
+      "pass_fail_criteria": "8 of 15 interviewees say they would try Bronze if they could see Farmmap had brought visitors to their listing; fewer than 4 cite £20/month as the primary objection",
+      "timing": "Pre-launch; Month 1–2",
+      "cost": "£0 (founder-led outreach to 15 shops; 20 minutes per interview)"
+    },
+    {
+      "test_name": "Pre-launch consumer waitlist landing page",
+      "purpose": "Validate consumer demand for the farm shop and honesty box discovery use case before V1 investment",
+      "pass_fail_criteria": "500 waitlist sign-ups within 4 weeks of landing page going live; geography distribution across at least 6 English counties",
+      "timing": "Month 2–3",
+      "cost": "£0–£200 (simple landing page; no engineering required for waitlist capture)"
+    },
+    {
+      "test_name": "FRA partnership outreach",
+      "purpose": "Confirm whether FRA will endorse or data-share with Farmmap; determines warm vs cold acquisition model for Year 1",
+      "pass_fail_criteria": "Written response from FRA within 60 days of initial contact; any form of collaboration confirmed before Month 4",
+      "timing": "Month 1 (founder priority action)",
+      "cost": "Founder time only"
+    },
+    {
+      "test_name": "yourhonestybox.com formal agreement",
+      "purpose": "Convert confirmed consent into a documented data licence agreement that satisfies V1-C3 compliance condition",
+      "pass_fail_criteria": "Written data licence agreement executed before V1 launch; covers commercial use, attribution, and scope of permitted listing data",
+      "timing": "Month 1–2",
+      "cost": "£500–£1,500 legal fees for agreement drafting"
+    }
+  ]
+}

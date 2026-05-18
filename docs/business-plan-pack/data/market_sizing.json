@@ -1,0 +1,86 @@
+{
+  "currency": "GBP",
+  "geography": "United Kingdom and Republic of Ireland",
+  "tam": {
+    "value": 1767000000,
+    "unit": "GBP annual consumer spend across UK+Ireland local food direct-sales channels",
+    "calculation": "UK farm shops £1,290m (3,400 shops × £380k average revenue) + UK farmers markets £225m (750 markets × £300k) + UK honesty boxes/gate stalls £72m (6,000 sites × £12k) + Republic of Ireland £180m (450 shops × £300k + 350 honesty boxes × £10k). Total: £1,767m.",
+    "source_ids": ["src-001", "src-002", "src-003", "src-004", "src-005"],
+    "basis": "FRA Annual Review 2023 (farm shop counts), FRA Benchmarking Report 2022 (revenue averages), FARMA census 2022 (farmers markets), Bord Bia Direct Sales Programme 2023 (ROI), DEFRA Farm Business Survey 2022/23 (cross-check; NFU cites £1.2–1.5bn for UK farm retail)"
+  },
+  "sam": {
+    "value": 400000,
+    "unit": "GBP annual revenue potential (realistic subscription revenue from 5,700 addressable listings)",
+    "calculation": "5,700 total serviceable listings (3,000 UK farm shops + 2,000 UK honesty boxes + 700 Ireland/NI). At mature 20% Bronze penetration of 3,900 addressable listings: 780 Bronze subscribers × £240 = £187,200/year Bronze. At 4% Silver penetration of 1,700 addressable: 68 Silver shops × £720 + GMV commission ≈ £50,000/year Silver. Total SAM range £250,000–£500,000/year.",
+    "source_ids": ["src-001", "src-006"],
+    "basis": "FRA Digital Adoption Survey 2022 (3,000 serviceable UK farm shops after excluding 400 self-sufficient large operations); yourhonestybox.com data (honesty box density inference); inference calculations from tam-sam-som.md"
+  },
+  "som": {
+    "value": 164000,
+    "unit": "GBP Year 3 base case annual revenue (single-vertical Farmmap)",
+    "calculation": "143 Bronze × £240 = £34,320 + 29 Silver × £720 + (29 × £1,800 GMV/month × 12 × 3%) = £39,672 + 18 Gold × £1,200 + (18 × £5,000 GMV/month × 12 × 5%) = £75,600 + £14,300 campaign add-ons = £163,892 rounded to £164,000",
+    "source_ids": ["src-006", "src-007"],
+    "basis": "value-bench.md Year 3 base case; saleability-critique.md conversion rates; pricing-hypothesis.md tier structure"
+  },
+  "som_year_5_base": {
+    "value": 286000,
+    "unit": "GBP Year 5 base case annual revenue (single-vertical, conservative flat GMV)",
+    "calculation": "210 Bronze × £240 + 65 Silver × £720 + (65 × £1,800 GMV/month × 12 × 3%) + 30 Gold × £1,200 + (30 × £5,000 GMV/month × 12 × 5%) + £21,000 add-ons = £286,320"
+  },
+  "som_year_5_with_gmv_compounding": {
+    "value": 450000,
+    "unit": "GBP Year 5 optimistic (30% annual GMV growth per retained Silver/Gold shop)",
+    "basis": "Assumption — requires post-launch cohort validation"
+  },
+  "som_portfolio_year_5": {
+    "value": 2205000,
+    "unit": "GBP Year 5 (all 7 verticals at Farmmap-scaled revenue)",
+    "calculation": "Farmmap £450k + BrewMap £315k + CampingMap £540k + BerthMap £135k + FishMap £360k + ForecourtMap £225k + TractorMap £180k = £2,205k",
+    "basis": "value-bench.md portfolio multiplier section; directional only — each vertical requires own analysis"
+  },
+  "portfolio_multiplier": 4.9,
+  "target_segments": [
+    {
+      "segment": "UK farm shops with no web presence",
+      "count": 2310,
+      "source": "FRA Digital Adoption Survey 2022 (66% of 3,500 shops have no website)"
+    },
+    {
+      "segment": "UK farm shops with web presence but poor SEO",
+      "count": 690,
+      "source": "Inference — of 1,020 shops with websites, ~690 have inadequate local SEO (AHDB Farm Business Survey 2023: 43% of farm shops have incorrect/stale Google Maps data)"
+    },
+    {
+      "segment": "UK honesty boxes with digital discovery potential",
+      "count": 2000,
+      "source": "Inference — 40% of estimated 5,000 UK honesty box operations are sufficiently established to benefit from directory listing"
+    },
+    {
+      "segment": "Ireland/NI serviceable listings",
+      "count": 700,
+      "source": "Inference — 300 serviceable Irish farm shops + 400 serviceable Ireland/NI honesty boxes; yourhonestybox.com data as proxy"
+    }
+  ],
+  "financial_model_links": [
+    {
+      "market_assumption": "5,700 total addressable listings",
+      "financial_input_field": "financial_inputs.customer_acquisition.target_customers_population"
+    },
+    {
+      "market_assumption": "15% claim rate by Month 12 = 855 claimed listings",
+      "financial_input_field": "financial_inputs.market_to_revenue_bridge.step_2_claimed_month_12"
+    },
+    {
+      "market_assumption": "6% free-to-Bronze conversion of claimed listings (base case)",
+      "financial_input_field": "financial_inputs.customer_acquisition.conversion_rate"
+    },
+    {
+      "market_assumption": "Average Silver GMV £1,800/month per shop",
+      "financial_input_field": "financial_inputs.revenue_streams[2].average_monthly_gmv"
+    },
+    {
+      "market_assumption": "Average Gold GMV £5,000/month per shop",
+      "financial_input_field": "financial_inputs.revenue_streams[4].average_monthly_gmv"
+    }
+  ]
+}

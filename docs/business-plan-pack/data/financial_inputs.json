@@ -1,0 +1,331 @@
+{
+  "version": "1.0.0",
+  "currency": "GBP",
+  "produced_at": "2026-05-17",
+  "model_horizon_years": 3,
+  "notes": "All values trace to financial-model.md, value-bench.md, and assumptions_register.json. Status annotations: [FACT], [INFERENCE], [ASSUMPTION].",
+
+  "revenue_streams": [
+    {
+      "stream_id": "RS-01",
+      "name": "Bronze subscription",
+      "model": "Flat monthly recurring",
+      "price_per_unit_per_month": 20.00,
+      "price_per_unit_per_year": 240.00,
+      "trigger": "Shop upgrades from free claimed tier to Bronze",
+      "commission_rate": null,
+      "commission_threshold_gbp": null,
+      "note": "Primary revenue stream at V2 launch. Net of Stripe fees: ~£19.12/shop/month. Status: [FACT — intake.md pricing decision]"
+    },
+    {
+      "stream_id": "RS-02",
+      "name": "Silver subscription",
+      "model": "Flat monthly recurring",
+      "price_per_unit_per_month": 60.00,
+      "price_per_unit_per_year": 720.00,
+      "trigger": "Bronze shop upgrades to Silver (requires 20+ ordering waitlist sign-ups or 6+ months on Bronze)",
+      "commission_rate": null,
+      "commission_threshold_gbp": null,
+      "note": "Status: [FACT — intake.md pricing decision]"
+    },
+    {
+      "stream_id": "RS-03",
+      "name": "Silver commission on GMV",
+      "model": "Percentage commission per transaction",
+      "price_per_unit_per_month": null,
+      "commission_rate": 0.03,
+      "commission_threshold_gbp": 20.00,
+      "trigger": "Order total equals or exceeds £20",
+      "average_monthly_gmv_early_phase": 800.00,
+      "average_monthly_gmv_year3": 1200.00,
+      "note": "Commission applies to the full basket value when basket ≥ £20. Average GMV £800/month early phase [ASSUMPTION], £1,200 by Year 3 [ASSUMPTION]. Status: [FACT — intake.md; ASSUMPTION — GMV level]"
+    },
+    {
+      "stream_id": "RS-04",
+      "name": "Gold subscription",
+      "model": "Flat monthly recurring",
+      "price_per_unit_per_month": 100.00,
+      "price_per_unit_per_year": 1200.00,
+      "trigger": "Silver shop upgrades to Gold (requires 3+ months on Silver + 50+ completed orders)",
+      "commission_rate": null,
+      "commission_threshold_gbp": null,
+      "note": "Status: [FACT — intake.md pricing decision]"
+    },
+    {
+      "stream_id": "RS-05",
+      "name": "Gold commission on GMV",
+      "model": "Percentage commission per transaction",
+      "price_per_unit_per_month": null,
+      "commission_rate": 0.05,
+      "commission_threshold_gbp": 30.00,
+      "trigger": "Order total equals or exceeds £30",
+      "average_monthly_gmv_early_phase": 2500.00,
+      "average_monthly_gmv_year3": 3500.00,
+      "gold_commission_cap_risk_threshold": 8000.00,
+      "note": "5% commission becomes a retention risk above £8,000/month GMV per shop (viability-gate condition gold-commission-cap). Commission cap design required before V3 launch. Status: [FACT — intake.md; ASSUMPTION — GMV level]"
+    },
+    {
+      "stream_id": "RS-06",
+      "name": "Campaign add-ons (Bronze tier)",
+      "model": "One-off per campaign",
+      "price_per_campaign": 50.00,
+      "average_campaigns_per_shop_per_year": 2,
+      "trigger": "Shop purchases a newsletter feature or social post campaign",
+      "note": "Done-for-you output. Modelled at 2 campaigns/Bronze shop/year. Status: [FACT — intake.md; ASSUMPTION — frequency]"
+    }
+  ],
+
+  "customer_acquisition": {
+    "target_customers_population": 5700,
+    "target_customers_population_note": "Total UK+Ireland serviceable listings [INFERENCE — tam-sam-som.md]",
+    "seed_listings_at_launch": 953,
+    "seed_listings_note": "[FACT — intake.md]",
+    "claim_rate_month_12_percent": 15,
+    "claimed_listings_month_12": 143,
+    "claim_rate_month_18_percent": 25,
+    "claimed_listings_month_18": 238,
+    "claim_rate_month_24_percent": 35,
+    "claimed_listings_month_24": 333,
+    "claim_rate_month_36_percent": 50,
+    "claimed_listings_month_36": 477,
+    "conversion_rate_base_percent": 6,
+    "conversion_rate_downside_percent": 3,
+    "conversion_rate_upside_percent": 10,
+    "bronze_to_silver_progression_percent": 30,
+    "blended_cac_gbp": 125,
+    "cac_fra_channel_gbp": 45,
+    "cac_email_channel_gbp": 85,
+    "cac_rep_channel_gbp": 190,
+    "annual_churn_bronze_silver_percent": 15,
+    "annual_churn_gold_percent": 12,
+    "ltv_bronze_gross_gbp": 1608,
+    "ltv_silver_gross_gbp": 9166,
+    "ltv_gold_gross_gbp": 34860,
+    "notes": "All conversion rates and claim rates are [ASSUMPTION]. LTV calculations are [INFERENCE] from revenue streams and churn rates."
+  },
+
+  "market_to_revenue_bridge": [
+    {
+      "step": 1,
+      "description": "Consumer traffic — 100,000 monthly visitors at Month 12",
+      "value": 100000,
+      "unit": "monthly visitors",
+      "status": "ASSUMPTION",
+      "dependency": "SEO content programme executed from Month 1; county guide articles, JSON-LD markup on all 953 listings"
+    },
+    {
+      "step": 2,
+      "description": "Claimed listings at Month 12 — 15% of 953 seeded listings",
+      "value": 143,
+      "unit": "claimed listings",
+      "status": "ASSUMPTION",
+      "dependency": "Consumer traffic reaching threshold (50+ sessions/month on a listing) triggers traffic-triggered email outreach"
+    },
+    {
+      "step": 3,
+      "description": "Bronze subscribers at Month 12 — 6% of claimed listings (base case)",
+      "value": 9,
+      "unit": "paying Bronze shops",
+      "status": "ASSUMPTION",
+      "dependency": "Analytics dashboard demonstrates traffic evidence; 90-day trial for first 50 subscribers reduces conversion barrier"
+    },
+    {
+      "step": 4,
+      "description": "Bronze subscribers at Month 36 (Year 3 end) — base case",
+      "value": 57,
+      "unit": "paying Bronze shops",
+      "status": "ASSUMPTION",
+      "dependency": "Claim rate reaching 50% of 953 seed listings; Bronze conversion progressing to 12% of claimed by Year 3"
+    },
+    {
+      "step": 5,
+      "description": "Year 3 base-case total revenue",
+      "value": 60100,
+      "unit": "GBP annual",
+      "status": "INFERENCE",
+      "dependency": "45 avg Bronze × £20 × 12 + 25 avg Silver × £60 × 12 + Silver commission + 5 avg Gold × £100 × 12 + Gold commission + campaign add-ons"
+    }
+  ],
+
+  "cost_of_sales": {
+    "stripe_subscription_rate_percent": 2.9,
+    "stripe_subscription_fixed_gbp": 0.30,
+    "stripe_connect_payout_rate_percent": 0.25,
+    "net_bronze_per_shop_per_month": 19.12,
+    "net_silver_commission_example": "On £1,000 GMV: 3% commission = £30; Stripe 0.25% payout = £2.50; net = £27.50",
+    "notes": "[FACT — Stripe UK published pricing 2025]"
+  },
+
+  "operating_expenses": {
+    "year_1": {
+      "supabase": 0,
+      "vercel": 0,
+      "resend_or_postmark_email": 0,
+      "monitoring_sentry_betterstack": 0,
+      "content_production": 3000,
+      "legal_accounting": 3000,
+      "other_tools_domains_misc": 500,
+      "total": 6500,
+      "founder_salary": 0,
+      "notes": "Supabase and Vercel on free tiers through Year 1. Legal budget covers ToS, privacy policy, yourhonestybox.com agreement, FRA partnership review. [ASSUMPTION]"
+    },
+    "year_2": {
+      "supabase_pro": 600,
+      "vercel_pro": 240,
+      "resend_email": 120,
+      "monitoring": 240,
+      "content_moderation_contractor": 12000,
+      "marketing_seo": 8000,
+      "legal_accounting": 3000,
+      "other": 800,
+      "total_excl_salary": 25000,
+      "founder_salary": 40000,
+      "total_incl_salary": 65000,
+      "notes": "Infrastructure costs activate from Q3 Year 2. Content/moderation contractor from Month 20. Marketing budget covers FRA show, county content programme. [ASSUMPTION]"
+    },
+    "year_3": {
+      "supabase_pro": 600,
+      "vercel_pro": 240,
+      "resend_email": 240,
+      "monitoring": 360,
+      "content_moderation_contractor": 12000,
+      "marketing_seo": 15000,
+      "agricultural_show_presence": 5000,
+      "legal_accounting": 3000,
+      "other": 560,
+      "total_excl_salary": 37000,
+      "founder_salary": 55000,
+      "total_incl_salary": 92000,
+      "notes": "Agricultural show (Royal Highland, Royal Bath & West, or county show TBD). FRA show stand. Full SEO content programme. [ASSUMPTION]"
+    }
+  },
+
+  "staffing_plan": {
+    "founder_year1": {
+      "role": "Solo founder — all functions",
+      "salary_gbp": 0,
+      "hours_per_week_estimated": 40,
+      "note": "No salary taken from business in Year 1; personal capital covers living costs [ASSUMPTION]"
+    },
+    "founder_year2": {
+      "role": "Solo founder — all functions including product",
+      "salary_gbp": 40000,
+      "note": "Primary driver of Year 2 EBITDA deficit. Deferral to Year 3 reduces Year 2 deficit to ~£12,928 [ASSUMPTION]"
+    },
+    "first_hire_month20": {
+      "role": "Part-time content and moderation contractor",
+      "monthly_cost_gbp": 1000,
+      "annual_cost_gbp": 12000,
+      "start_month": 20,
+      "note": "2 days per week; handles moderation queue and content production. Funded from Bronze revenue at ~30+ subscribers. De-risks solo founder incapacity risk (ER-01). [ASSUMPTION]"
+    },
+    "founder_year3": {
+      "role": "Founder — commercial development and portfolio strategy",
+      "salary_gbp": 55000,
+      "note": "[ASSUMPTION]"
+    }
+  },
+
+  "funding_requirement": {
+    "recommended_approach": "Bootstrap",
+    "personal_capital_injection_gbp": 5000,
+    "year1_closing_balance_base_case_gbp": -360,
+    "year1_closing_balance_note": "Tight but manageable if content and legal spend is staged correctly. Year 1 spend plan: ~£500 Month 1; ~£600 Months 2–4; ~£2,000 Months 5–8; ~£1,900 Months 9–12.",
+    "innovate_uk_option": {
+      "type": "Non-dilutive grant",
+      "amount_range_gbp": "25000–100000",
+      "application_target": "Q2 Year 1 (Months 3–6)",
+      "recommendation": "Submit as parallel track, not dependency. If successful, deployed in Year 2 to accelerate content programme and partially fund founder salary. Break-even advances from Month 42–48 to ~Month 36 with £25k grant."
+    },
+    "angel_seed_option": {
+      "type": "Equity seed round",
+      "amount_gbp": "100000–250000",
+      "recommended_trigger": "Bronze conversion confirmed at 3% downside by Month 9, OR outperforming plan (8%+ conversion, 80k+ traffic) and accelerating portfolio engine",
+      "recommendation": "Defer angel seed consideration until Month 9 review or 50+ Bronze subscribers. Do not raise pre-launch — product is more fundable post-launch with traffic data than pre-launch with projections."
+    },
+    "break_even_month_base_case": "42–48",
+    "break_even_month_without_founder_salary_year12": "30–34",
+    "break_even_note": "Break-even defined as all operating costs covered including founder salary. At Month 36 end, monthly revenue ~£5,008 vs monthly operating cost run rate ~£7,500."
+  },
+
+  "scenario_inputs": {
+    "base_case": {
+      "conversion_rate_percent": 6,
+      "monthly_traffic_month12": 100000,
+      "silver_avg_gmv_early_gbp": 800,
+      "silver_avg_gmv_year3_gbp": 1200,
+      "gold_avg_gmv_early_gbp": 2500,
+      "bronze_shops_year3_end": 57,
+      "silver_shops_year3_end": 33,
+      "gold_shops_year3_end": 10,
+      "year1_revenue_gbp": 1360,
+      "year2_revenue_gbp": 11292,
+      "year3_revenue_gbp": 60100,
+      "year1_ebitda_gbp": -5360,
+      "year2_ebitda_gbp": -52928,
+      "year3_ebitda_gbp": -33940,
+      "break_even_month": "42–48"
+    },
+    "downside_case": {
+      "conversion_rate_percent": 3,
+      "monthly_traffic_month12": 40000,
+      "silver_avg_gmv_early_gbp": 400,
+      "bronze_shops_year3_end": 28,
+      "silver_shops_year3_end": 12,
+      "gold_shops_year3_end": 0,
+      "year3_revenue_gbp": 26000,
+      "break_even_month": "60+",
+      "trigger_action": "Angel seed round evaluation at Month 9 if confirmed in downside case"
+    },
+    "upside_case": {
+      "conversion_rate_percent": 10,
+      "monthly_traffic_month12": 150000,
+      "fra_partnership": "confirmed and active",
+      "bronze_shops_year3_end": 85,
+      "silver_shops_year3_end": 50,
+      "gold_shops_year3_end": 18,
+      "year3_revenue_gbp": 130000,
+      "break_even_month": "30–36",
+      "trigger_action": "Evaluate angel seed to accelerate portfolio engine investment; TractorMap launch potentially Month 18 instead of Month 24"
+    }
+  },
+
+  "three_year_summary_table": {
+    "year_1": {
+      "bronze_shops_year_end": 9,
+      "silver_shops_year_end": 0,
+      "gold_shops_year_end": 0,
+      "total_revenue_gbp": 1360,
+      "direct_costs_gbp": 220,
+      "gross_profit_gbp": 1140,
+      "gross_margin_percent": 84,
+      "operating_costs_gbp": 6500,
+      "ebitda_gbp": -5360,
+      "founder_salary_included_gbp": 0
+    },
+    "year_2": {
+      "bronze_shops_year_end": 33,
+      "silver_shops_year_end": 17,
+      "gold_shops_year_end": 0,
+      "total_revenue_gbp": 11292,
+      "direct_costs_gbp": 1220,
+      "gross_profit_gbp": 10072,
+      "gross_margin_percent": 89,
+      "operating_costs_gbp": 63000,
+      "ebitda_gbp": -52928,
+      "founder_salary_included_gbp": 40000
+    },
+    "year_3": {
+      "bronze_shops_year_end": 57,
+      "silver_shops_year_end": 33,
+      "gold_shops_year_end": 10,
+      "total_revenue_gbp": 60100,
+      "direct_costs_gbp": 4040,
+      "gross_profit_gbp": 56060,
+      "gross_margin_percent": 93,
+      "operating_costs_gbp": 90000,
+      "ebitda_gbp": -33940,
+      "founder_salary_included_gbp": 55000
+    }
+  }
+}

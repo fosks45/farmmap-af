@@ -1,0 +1,2232 @@
+openapi: 3.1.0
+info:
+  title: Farmmap API
+  version: 1.0.0
+  description: >
+    Farmmap public and authenticated API covering all Must-Have features (F1–F16).
+    All endpoints require a Supabase JWT Bearer token where marked. directory_id
+    is resolved server-side from the Host header; it is never a client parameter
+    on public endpoints.
+  contact:
+    name: Farmmap Engineering
+    url: https://farmmap.co.uk
+
+servers:
+  - url: https://farmmap.co.uk/api
+    description: Production
+  - url: https://staging.farmmap.co.uk/api
+    description: Staging
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Supabase JWT token from auth.getSession()
+
+  parameters:
+    ListingSlug:
+      name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+        example: hargreaves-farm-shop
+    ProductId:
+      name: productId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    OrderId:
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    PhotoId:
+      name: photoId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ListingId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    LimitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+
+  schemas:
+    # ---- Core types ----
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          example: not_found
+        message:
+          type: string
+          example: Listing not found
+        details:
+          type: object
+          additionalProperties: true
+
+    ListingType:
+      type: string
+      enum: [farm_shop, honesty_box, farm_gate_stall, roadside_stand]
+
+    ListingStatus:
+      type: string
+      enum: [pending, active, claimed, suspended]
+
+    SubscriptionTier:
+      type: string
+      enum: [free, bronze, silver, gold]
+
+    OpeningHoursDay:
+      type: object
+      properties:
+        open:
+          type: string
+          pattern: '^([01]\d|2[0-3]):[0-5]\d$'
+          example: '09:00'
+        close:
+          type: string
+          pattern: '^([01]\d|2[0-3]):[0-5]\d$'
+          example: '17:00'
+        closed:
+          type: boolean
+
+    OpeningHours:
+      type: object
+      properties:
+        monday:
+          $ref: '#/components/schemas/OpeningHoursDay'
+        tuesday:
+          $ref: '#/components/schemas/OpeningHoursDay'
+        wednesday:
+          $ref: '#/components/schemas/OpeningHoursDay'
+        thursday:
+          $ref: '#/components/schemas/OpeningHoursDay'
+        friday:
+          $ref: '#/components/schemas/OpeningHoursDay'
+        saturday:
+          $ref: '#/components/schemas/OpeningHoursDay'
+        sunday:
+          $ref: '#/components/schemas/OpeningHoursDay'
+        notes:
+          type: string
+          description: Free text for irregular patterns, e.g. "Tuesday and Friday only"
+          maxLength: 500
+        bank_holidays_closed:
+          type: boolean
+
+    GeoPoint:
+      type: object
+      required: [lon, lat]
+      properties:
+        lon:
+          type: number
+          format: double
+          minimum: -180
+          maximum: 180
+        lat:
+          type: number
+          format: double
+          minimum: -90
+          maximum: 90
+
+    ListingMeta:
+      type: object
+      description: >
+        Listing-type-specific metadata. For honesty_box:
+        payment_methods, currently_stocked, stocked_updated_at, location_description.
+      additionalProperties: true
+
+    ListingSummary:
+      type: object
+      required: [id, slug, name, listing_type, status, tier, town, county, country, location]
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+        name:
+          type: string
+        listing_type:
+          $ref: '#/components/schemas/ListingType'
+        status:
+          $ref: '#/components/schemas/ListingStatus'
+        tier:
+          $ref: '#/components/schemas/SubscriptionTier'
+        town:
+          type: string
+        county:
+          type: string
+        country:
+          type: string
+        location:
+          $ref: '#/components/schemas/GeoPoint'
+        review_rating_avg:
+          type: number
+          format: float
+          nullable: true
+        review_count:
+          type: integer
+        hero_photo_url:
+          type: string
+          format: uri
+          nullable: true
+
+    ListingDetail:
+      allOf:
+        - $ref: '#/components/schemas/ListingSummary'
+        - type: object
+          properties:
+            address_line1:
+              type: string
+            address_line2:
+              type: string
+            postcode:
+              type: string
+            eircode:
+              type: string
+            phone:
+              type: string
+            website:
+              type: string
+              format: uri
+            description:
+              type: string
+            opening_hours:
+              $ref: '#/components/schemas/OpeningHours'
+            temporarily_closed:
+              type: boolean
+            listing_type_meta:
+              $ref: '#/components/schemas/ListingMeta'
+            photos:
+              type: array
+              items:
+                $ref: '#/components/schemas/ListingPhoto'
+            geocoding_approximate:
+              type: boolean
+
+    ListingPhoto:
+      type: object
+      required: [id, url, thumbnail_url, alt_text]
+      properties:
+        id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: uri
+        thumbnail_url:
+          type: string
+          format: uri
+        alt_text:
+          type: string
+        display_order:
+          type: integer
+
+    Product:
+      type: object
+      required: [id, name, category, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 2000
+        price_pence:
+          type: integer
+          nullable: true
+        price_currency:
+          type: string
+          enum: [GBP, EUR]
+          default: GBP
+        price_display:
+          type: string
+          maxLength: 100
+        category:
+          type: string
+        allergens_contain:
+          type: array
+          items:
+            type: string
+            enum:
+              - celery
+              - cereals_containing_gluten
+              - crustaceans
+              - eggs
+              - fish
+              - lupin
+              - milk
+              - molluscs
+              - mustard
+              - peanuts
+              - sesame
+              - soybeans
+              - sulphur_dioxide_sulphites
+              - tree_nuts
+          nullable: true
+        allergens_may_contain:
+          type: string
+          nullable: true
+        allergen_declaration_complete:
+          type: boolean
+          readOnly: true
+        is_purchasable:
+          type: boolean
+        is_perishable:
+          type: boolean
+          nullable: true
+        is_seasonal:
+          type: boolean
+        seasonal_months:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+            maximum: 12
+          nullable: true
+        stock_count:
+          type: integer
+          nullable: true
+        status:
+          type: string
+          enum: [active, draft, archived]
+        photo_url:
+          type: string
+          format: uri
+          nullable: true
+
+    Review:
+      type: object
+      required: [id, rating, body, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        body:
+          type: string
+          minLength: 20
+          maxLength: 1000
+        owner_response:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+
+    OrderStatus:
+      type: string
+      enum: [pending, accepted, preparing, dispatched, delivered, cancelled, refunded]
+
+    OrderItem:
+      type: object
+      required: [product_id, product_name, quantity, unit_price_pence, line_total_pence]
+      properties:
+        product_id:
+          type: string
+          format: uuid
+        product_name:
+          type: string
+        quantity:
+          type: integer
+          minimum: 1
+        unit_price_pence:
+          type: integer
+        line_total_pence:
+          type: integer
+
+    Order:
+      type: object
+      required: [id, status, subtotal_pence, total_pence, items, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        subtotal_pence:
+          type: integer
+        commission_pence:
+          type: integer
+        delivery_fee_pence:
+          type: integer
+        total_pence:
+          type: integer
+        currency:
+          type: string
+          enum: [GBP, EUR]
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        delivery_slot:
+          type: object
+          nullable: true
+          properties:
+            date:
+              type: string
+              format: date
+            time_from:
+              type: string
+            time_to:
+              type: string
+        notes:
+          type: string
+          nullable: true
+        auto_cancel_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+
+    Manager:
+      type: object
+      required: [user_id, role, accepted_at]
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        display_name:
+          type: string
+          nullable: true
+        role:
+          type: string
+          enum: [owner, manager]
+        accepted_at:
+          type: string
+          format: date-time
+          nullable: true
+        invited_at:
+          type: string
+          format: date-time
+
+    SubscriptionState:
+      type: object
+      required: [tier, status]
+      properties:
+        tier:
+          $ref: '#/components/schemas/SubscriptionTier'
+        status:
+          type: string
+          enum: [active, past_due, suspended, cancelled, trialing]
+        current_period_end:
+          type: string
+          format: date-time
+          nullable: true
+        cancel_at_period_end:
+          type: boolean
+        pending_tier:
+          type: string
+          nullable: true
+        silver_months_count:
+          type: integer
+        completed_order_count:
+          type: integer
+        gold_eligible:
+          type: boolean
+          description: true when silver_months_count >= 3 AND completed_order_count >= 50
+        connect_onboarded:
+          type: boolean
+          description: true when Stripe Connect Standard onboarding is complete
+
+    AnalyticsSummary:
+      type: object
+      properties:
+        period_start:
+          type: string
+          format: date
+        period_end:
+          type: string
+          format: date
+        listing_page_views:
+          type: integer
+        map_pin_clicks:
+          type: integer
+        waitlist_signups:
+          type: integer
+        enquiry_submissions:
+          type: integer
+        last_updated_at:
+          type: string
+          format: date-time
+
+    CountySummary:
+      type: object
+      required: [slug, name, country, listing_count]
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        listing_count:
+          type: integer
+        listing_type_breakdown:
+          type: object
+          additionalProperties:
+            type: integer
+
+    Pagination:
+      type: object
+      required: [page, limit, total, total_pages]
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        total_pages:
+          type: integer
+
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+paths:
+  # ============================================================
+  # LISTINGS — Browse and Detail (F1, F2)
+  # ============================================================
+
+  /listings:
+    get:
+      operationId: listListings
+      summary: Search and filter listings
+      description: >
+        Returns listings matching the given filters. Supports geospatial radius
+        search, bounding box, listing type, product category, and open/closed filter.
+        directory_id is resolved server-side from the Host header.
+      tags: [Listings]
+      parameters:
+        - name: lat
+          in: query
+          schema:
+            type: number
+            format: double
+          description: Latitude for radius search
+        - name: lon
+          in: query
+          schema:
+            type: number
+            format: double
+          description: Longitude for radius search
+        - name: radius_metres
+          in: query
+          schema:
+            type: integer
+            minimum: 100
+            maximum: 100000
+            default: 25000
+        - name: bbox
+          in: query
+          schema:
+            type: string
+            pattern: '^-?\d+\.?\d*,-?\d+\.?\d*,-?\d+\.?\d*,-?\d+\.?\d*$'
+          description: Bounding box as minLon,minLat,maxLon,maxLat for map viewport queries
+        - name: listing_type
+          in: query
+          schema:
+            $ref: '#/components/schemas/ListingType'
+        - name: product_category
+          in: query
+          schema:
+            type: string
+        - name: open_now
+          in: query
+          schema:
+            type: boolean
+          description: Filter to listings currently open based on declared opening hours
+        - name: tier
+          in: query
+          schema:
+            $ref: '#/components/schemas/SubscriptionTier'
+        - name: county
+          in: query
+          schema:
+            type: string
+        - name: country
+          in: query
+          schema:
+            type: string
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: q
+          in: query
+          schema:
+            type: string
+            maxLength: 200
+          description: Free text search against listing name and description
+      responses:
+        '200':
+          description: Listings matching the query
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ListingSummary'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+  /listings/geojson:
+    get:
+      operationId: listingsGeoJSON
+      summary: GeoJSON endpoint for MapLibre map pins
+      description: >
+        Returns all active listings as a GeoJSON FeatureCollection with minimal
+        properties per feature. Used by MapLibre GL JS to render the map.
+        Optionally filtered by bounding box for viewport-based loading.
+      tags: [Listings]
+      parameters:
+        - name: bbox
+          in: query
+          schema:
+            type: string
+        - name: listing_type
+          in: query
+          schema:
+            $ref: '#/components/schemas/ListingType'
+        - name: product_category
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: GeoJSON FeatureCollection of active listing pins
+          content:
+            application/geo+json:
+              schema:
+                type: object
+                required: [type, features]
+                properties:
+                  type:
+                    type: string
+                    enum: [FeatureCollection]
+                  features:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum: [Feature]
+                        geometry:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              enum: [Point]
+                            coordinates:
+                              type: array
+                              items:
+                                type: number
+                              minItems: 2
+                              maxItems: 2
+                        properties:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            slug:
+                              type: string
+                            name:
+                              type: string
+                            listing_type:
+                              $ref: '#/components/schemas/ListingType'
+                            tier:
+                              $ref: '#/components/schemas/SubscriptionTier'
+                            rating_avg:
+                              type: number
+                              nullable: true
+                            temporarily_closed:
+                              type: boolean
+
+  /listings/{slug}:
+    get:
+      operationId: getListing
+      summary: Get listing detail
+      description: >
+        Returns full listing detail including photos (approved only), opening hours,
+        and listing-type-specific metadata. No authentication required.
+      tags: [Listings]
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      responses:
+        '200':
+          description: Listing detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      operationId: updateListing
+      summary: Update listing fields
+      description: >
+        Updates listing fields. Requires owner or manager role for the listing.
+        Photos are managed separately via /photos endpoints.
+        All text fields take effect immediately; photo changes require moderation.
+      tags: [Listings]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                description:
+                  type: string
+                  maxLength: 5000
+                address_line1:
+                  type: string
+                address_line2:
+                  type: string
+                town:
+                  type: string
+                county:
+                  type: string
+                postcode:
+                  type: string
+                eircode:
+                  type: string
+                phone:
+                  type: string
+                website:
+                  type: string
+                  format: uri
+                opening_hours:
+                  $ref: '#/components/schemas/OpeningHours'
+                temporarily_closed:
+                  type: boolean
+                listing_type_meta:
+                  $ref: '#/components/schemas/ListingMeta'
+      responses:
+        '200':
+          description: Updated listing detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+  # ============================================================
+  # REVIEWS (F5)
+  # ============================================================
+
+  /listings/{slug}/reviews:
+    get:
+      operationId: listReviews
+      summary: Get paginated approved reviews for a listing
+      tags: [Reviews]
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: Paginated approved reviews
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Review'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  aggregate_rating:
+                    type: number
+                    nullable: true
+                    description: Null if fewer than 3 approved reviews
+                  review_count:
+                    type: integer
+
+    post:
+      operationId: submitReview
+      summary: Submit a consumer review
+      description: >
+        Authenticated consumer submits a star rating and text review.
+        Review enters moderation queue; not visible until approved.
+        One review per consumer per listing enforced.
+      tags: [Reviews]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [rating, body]
+              properties:
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                body:
+                  type: string
+                  minLength: 20
+                  maxLength: 1000
+      responses:
+        '201':
+          description: Review submitted and pending moderation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  message:
+                    type: string
+                    example: Your review has been submitted and is pending moderation.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          description: Consumer has already reviewed this listing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+  # ============================================================
+  # ORDERING WAITLIST (F6)
+  # ============================================================
+
+  /listings/{slug}/waitlist:
+    post:
+      operationId: joinWaitlist
+      summary: Join the ordering waitlist for a listing
+      description: >
+        Captures an email address for the ordering waitlist. No account required.
+        Sends a confirmation email with a one-click unsubscribe link.
+        Duplicate emails for the same listing are silently de-duplicated.
+      tags: [Waitlist]
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 255
+      responses:
+        '200':
+          description: Waitlist signup confirmed (includes de-duplication case)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "You're on the list! We'll email you when ordering goes live."
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  # ============================================================
+  # LISTING CLAIM (F3)
+  # ============================================================
+
+  /listings/{slug}/claim:
+    post:
+      operationId: initiateListingClaim
+      summary: Initiate a listing claim
+      description: >
+        Step 1 of the claim flow. Validates the listing is not already claimed,
+        creates a claim token, and sends a verification email.
+        The token expires after 24 hours.
+      tags: [Claim]
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, role, email]
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                role:
+                  type: string
+                  enum: [owner, manager, family_member]
+                email:
+                  type: string
+                  format: email
+                  maxLength: 255
+      responses:
+        '200':
+          description: Verification email sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Verification email sent. Please check your inbox.
+        '409':
+          description: Listing is already claimed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+  /listings/{slug}/claim/verify:
+    post:
+      operationId: verifyListingClaim
+      summary: Verify a listing claim token
+      description: >
+        Step 2 of the claim flow. Accepts the token from the verification email.
+        On success, the listing is transferred to the claimant's account.
+        Requires the claimant to be authenticated (account created if new).
+      tags: [Claim]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token]
+              properties:
+                token:
+                  type: string
+      responses:
+        '200':
+          description: Claim verified; listing transferred to claimant
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  listing_slug:
+                    type: string
+                  dashboard_url:
+                    type: string
+                    format: uri
+        '400':
+          description: Token invalid or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ============================================================
+  # PHOTOS (F4, F11)
+  # ============================================================
+
+  /listings/{slug}/photos:
+    post:
+      operationId: uploadListingPhoto
+      summary: Upload a listing photo
+      description: >
+        Accepts JPEG or PNG; max 5MB. Server-side resized to max 1200x900 WebP
+        and thumbnail generated. Photo enters moderation queue (pending status).
+        Requires owner or manager role.
+      tags: [Photos]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [photo]
+              properties:
+                photo:
+                  type: string
+                  format: binary
+                  description: JPEG or PNG, max 5MB
+                alt_text:
+                  type: string
+                  maxLength: 255
+                  description: Optional alt text; defaults to listing name if not provided
+                display_order:
+                  type: integer
+                  default: 0
+      responses:
+        '201':
+          description: Photo uploaded and pending moderation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                  moderation_status:
+                    type: string
+                    enum: [pending]
+                  message:
+                    type: string
+                    example: Photo uploaded and pending moderation.
+        '400':
+          description: Invalid file type or file too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /listings/{slug}/photos/{photoId}:
+    delete:
+      operationId: deleteListingPhoto
+      summary: Delete a listing photo
+      description: >
+        Soft-deletes the photo record and schedules storage object deletion.
+        Requires owner or manager role.
+      tags: [Photos]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+        - $ref: '#/components/parameters/PhotoId'
+      responses:
+        '204':
+          description: Photo deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ============================================================
+  # SUBSCRIPTIONS (F7, F8, F9, F10)
+  # ============================================================
+
+  /subscriptions/{slug}:
+    get:
+      operationId: getSubscription
+      summary: Get current subscription state for a listing
+      description: >
+        Returns the current tier, status, billing period, Gold eligibility flags,
+        and Stripe Connect onboarding status. Requires owner role.
+      tags: [Subscriptions]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      responses:
+        '200':
+          description: Current subscription state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionState'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /subscriptions/{slug}/checkout:
+    post:
+      operationId: createCheckoutSession
+      summary: Create a Stripe Checkout session for subscription upgrade
+      description: >
+        Creates a Stripe Billing Checkout session for Bronze, Silver, or Gold
+        subscription. For Silver/Gold, validates Stripe Connect onboarding is
+        complete. For Gold, validates eligibility gate (silver_months >= 3 AND
+        completed_order_count >= 50, or gold_eligibility_override = true).
+        Returns the Stripe Checkout session URL.
+      tags: [Subscriptions]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tier]
+              properties:
+                tier:
+                  type: string
+                  enum: [bronze, silver, gold]
+      responses:
+        '200':
+          description: Stripe Checkout session created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [checkout_url]
+                properties:
+                  checkout_url:
+                    type: string
+                    format: uri
+        '400':
+          description: Gold eligibility not met or Connect onboarding incomplete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /subscriptions/{slug}/portal:
+    post:
+      operationId: createBillingPortalSession
+      summary: Create a Stripe Billing Portal session
+      description: >
+        Returns a Stripe Billing Portal URL allowing the owner to manage their
+        subscription (upgrade, downgrade, cancel, update payment method).
+        Requires owner role.
+      tags: [Subscriptions]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      responses:
+        '200':
+          description: Stripe Billing Portal session created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [portal_url]
+                properties:
+                  portal_url:
+                    type: string
+                    format: uri
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /subscriptions/{slug}/connect:
+    post:
+      operationId: initiateConnectOnboarding
+      summary: Initiate Stripe Connect Standard onboarding
+      description: >
+        Creates a Stripe Connect Standard OAuth link for Silver/Gold listings.
+        Returns the Stripe Connect onboarding URL.
+        Required before Silver/Gold Checkout session can be created.
+      tags: [Subscriptions]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      responses:
+        '200':
+          description: Stripe Connect onboarding link created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [connect_url]
+                properties:
+                  connect_url:
+                    type: string
+                    format: uri
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  # ============================================================
+  # STRIPE WEBHOOK
+  # ============================================================
+
+  /webhooks/stripe:
+    post:
+      operationId: stripeWebhook
+      summary: Stripe webhook handler
+      description: >
+        Receives Stripe webhook events. Verified by Stripe-Signature header.
+        Handles: invoice.paid, invoice.payment_failed, customer.subscription.updated,
+        customer.subscription.deleted, charge.refunded, account.updated (Connect).
+        Idempotency enforced via event ID de-duplication.
+      tags: [Webhooks]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Stripe event payload
+              additionalProperties: true
+      parameters:
+        - name: Stripe-Signature
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Webhook received and processed
+        '400':
+          description: Invalid signature or malformed payload
+
+  # ============================================================
+  # PRODUCTS (F13)
+  # ============================================================
+
+  /listings/{slug}/products:
+    get:
+      operationId: listProducts
+      summary: List products for a listing
+      description: >
+        Public endpoint. Returns active products. For Bronze listings, returns
+        display-only products. For Silver/Gold, returns purchasable products
+        with allergen information. Allergen data is always included.
+      tags: [Products]
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: is_purchasable
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Product list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  tier:
+                    $ref: '#/components/schemas/SubscriptionTier'
+
+    post:
+      operationId: createProduct
+      summary: Create a product
+      description: >
+        Creates a new product (draft status by default). Requires owner or manager
+        role and Bronze+ subscription. is_purchasable may only be set to true when
+        allergen_declaration_complete is true and the listing is Silver/Gold.
+      tags: [Products]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: is_purchasable requested without allergen data complete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /listings/{slug}/products/{productId}:
+    put:
+      operationId: updateProduct
+      summary: Update a product
+      description: Requires owner or manager role and Bronze+ subscription.
+      tags: [Products]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+        - $ref: '#/components/parameters/ProductId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Updated product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Validation error (e.g., setting purchasable without allergen data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      operationId: deleteProduct
+      summary: Archive a product
+      description: Sets product status to archived. Requires owner or manager role.
+      tags: [Products]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+        - $ref: '#/components/parameters/ProductId'
+      responses:
+        '204':
+          description: Product archived
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ============================================================
+  # ORDERS (F8 Silver/Gold marketplace)
+  # ============================================================
+
+  /listings/{slug}/orders:
+    get:
+      operationId: listOrders
+      summary: List orders for a listing (owner/manager view)
+      description: >
+        Returns orders for the listing, sorted by created_at descending.
+        Requires owner or manager role.
+      tags: [Orders]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/OrderStatus'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: Paginated order list
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /orders:
+    post:
+      operationId: createOrder
+      summary: Create an order (consumer checkout)
+      description: >
+        Creates an order and reserves stock for 15 minutes. Returns a Stripe
+        Payment Intent client secret for the consumer to complete payment via
+        Stripe Elements. Idempotency key required in request body.
+        The listing must be Silver or Gold tier.
+      tags: [Orders]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [listing_id, items, delivery_zone_id, delivery_slot, buyer_name, buyer_email, idempotency_key]
+              properties:
+                listing_id:
+                  type: string
+                  format: uuid
+                items:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: object
+                    required: [product_id, quantity]
+                    properties:
+                      product_id:
+                        type: string
+                        format: uuid
+                      quantity:
+                        type: integer
+                        minimum: 1
+                delivery_zone_id:
+                  type: string
+                  format: uuid
+                delivery_slot:
+                  type: object
+                  required: [date, time_from, time_to]
+                  properties:
+                    date:
+                      type: string
+                      format: date
+                    time_from:
+                      type: string
+                    time_to:
+                      type: string
+                buyer_name:
+                  type: string
+                  maxLength: 255
+                buyer_email:
+                  type: string
+                  format: email
+                buyer_phone:
+                  type: string
+                delivery_address:
+                  type: object
+                  required: [line1, town, postcode]
+                  properties:
+                    line1:
+                      type: string
+                    line2:
+                      type: string
+                    town:
+                      type: string
+                    county:
+                      type: string
+                    postcode:
+                      type: string
+                notes:
+                  type: string
+                  maxLength: 500
+                idempotency_key:
+                  type: string
+                  format: uuid
+      responses:
+        '201':
+          description: Order created; payment intent ready
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [order_id, payment_intent_client_secret, total_pence]
+                properties:
+                  order_id:
+                    type: string
+                    format: uuid
+                  payment_intent_client_secret:
+                    type: string
+                    description: Stripe PaymentIntent client_secret for Stripe Elements
+                  total_pence:
+                    type: integer
+                  currency:
+                    type: string
+                    enum: [GBP, EUR]
+        '400':
+          description: Delivery postcode not in zone, stock unavailable, or listing not Silver/Gold
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          description: Duplicate idempotency key — returns existing order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+  /orders/{orderId}/status:
+    patch:
+      operationId: updateOrderStatus
+      summary: Update order status
+      description: >
+        Owner/manager transitions order through the status workflow:
+        pending → accepted → preparing → dispatched → delivered.
+        Also handles: cancellation (owner), refund initiation (owner).
+        Consumer is notified on each transition. Completing the order (delivered)
+        increments listing_subscriptions.completed_order_count.
+      tags: [Orders]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/OrderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  $ref: '#/components/schemas/OrderStatus'
+                cancellation_reason:
+                  type: string
+                  maxLength: 500
+      responses:
+        '200':
+          description: Order status updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Invalid status transition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ============================================================
+  # MANAGERS (F16 — multi-manager from v1)
+  # ============================================================
+
+  /listings/{slug}/managers:
+    get:
+      operationId: listManagers
+      summary: List managers for a listing
+      description: Requires owner or manager role.
+      tags: [Managers]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      responses:
+        '200':
+          description: List of managers and owner
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Manager'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    post:
+      operationId: inviteManager
+      summary: Invite a manager to a listing
+      description: >
+        Owner-only. Sends a manager invitation email with an acceptance link.
+        Token expires in 48 hours. Manager has access only after accepting.
+      tags: [Managers]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  maxLength: 255
+      responses:
+        '201':
+          description: Invitation sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invitation sent.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Only owners can invite managers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: User is already a manager
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /listings/{slug}/managers/{userId}:
+    delete:
+      operationId: removeManager
+      summary: Remove a manager from a listing
+      description: Owner-only. Removes the manager's access immediately.
+      tags: [Managers]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '204':
+          description: Manager removed
+        '400':
+          description: Cannot remove the listing owner via this endpoint
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ============================================================
+  # ANALYTICS (F22)
+  # ============================================================
+
+  /listings/{slug}/analytics:
+    get:
+      operationId: getListingAnalytics
+      summary: Get analytics summary for a listing
+      description: >
+        Returns aggregate analytics for the listing dashboard (page views,
+        pin clicks, waitlist signups, enquiry submissions). Data sourced from
+        server-side analytics_events table — consent-independent.
+        Requires owner or manager role.
+      tags: [Analytics]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [7d, 30d, 90d, 12m]
+            default: 30d
+      responses:
+        '200':
+          description: Analytics summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsSummary'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  # ============================================================
+  # DELIVERY ZONES (F18)
+  # ============================================================
+
+  /listings/{slug}/delivery-zones:
+    get:
+      operationId: listDeliveryZones
+      summary: List delivery zones for a listing
+      description: Public endpoint. Returns active delivery zones for Silver/Gold listings.
+      tags: [Delivery]
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      responses:
+        '200':
+          description: Delivery zones
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        zone_name:
+                          type: string
+                        postcodes:
+                          type: array
+                          items:
+                            type: string
+                        fee_pence:
+                          type: integer
+                        min_order_pence:
+                          type: integer
+                        time_slots:
+                          type: array
+                          items:
+                            type: object
+
+  /listings/{slug}/delivery-zones/check:
+    post:
+      operationId: checkDeliveryZone
+      summary: Check if a postcode is in a delivery zone
+      description: Used during checkout to validate delivery eligibility.
+      tags: [Delivery]
+      parameters:
+        - $ref: '#/components/parameters/ListingSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [postcode]
+              properties:
+                postcode:
+                  type: string
+      responses:
+        '200':
+          description: Delivery zone check result
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [eligible]
+                properties:
+                  eligible:
+                    type: boolean
+                  zone:
+                    type: object
+                    nullable: true
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      zone_name:
+                        type: string
+                      fee_pence:
+                        type: integer
+                      min_order_pence:
+                        type: integer
+
+  # ============================================================
+  # ADMIN CONSOLE (F11)
+  # ============================================================
+
+  /admin/listings/queue:
+    get:
+      operationId: adminGetListingQueue
+      summary: Get admin listing moderation queue
+      description: >
+        Returns listings with status=pending awaiting admin approval.
+        Requires directory_admin or super_admin role.
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: days_in_queue
+          in: query
+          schema:
+            type: integer
+          description: Filter to items in queue for more than N days
+      responses:
+        '200':
+          description: Listing moderation queue
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ListingDetail'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /admin/listings/{id}/status:
+    patch:
+      operationId: adminUpdateListingStatus
+      summary: Approve, reject, or request info on a listing
+      description: >
+        Moderation action on a pending listing. All actions written to audit_log.
+        Requires directory_admin, super_admin, or content_moderator role.
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ListingId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [approve, reject, request_info, suspend]
+                reason:
+                  type: string
+                  maxLength: 1000
+                  description: Required for reject, request_info, and suspend actions
+      responses:
+        '200':
+          description: Action applied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  listing_id:
+                    type: string
+                    format: uuid
+                  status:
+                    type: string
+                  audit_entry_id:
+                    type: integer
+        '400':
+          description: Reason required for reject/suspend
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /admin/photos/queue:
+    get:
+      operationId: adminGetPhotoQueue
+      summary: Get admin photo moderation queue
+      description: >
+        Returns photos with moderation_status=pending.
+        Requires directory_admin, super_admin, or content_moderator role.
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: Photo moderation queue
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        listing_slug:
+                          type: string
+                        listing_name:
+                          type: string
+                        thumbnail_url:
+                          type: string
+                          format: uri
+                        url:
+                          type: string
+                          format: uri
+                        uploaded_at:
+                          type: string
+                          format: date-time
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /admin/photos/{photoId}/status:
+    patch:
+      operationId: adminUpdatePhotoStatus
+      summary: Approve or reject a photo (single or bulk)
+      description: >
+        Moderation action on one or more pending photos. Bulk: pass array of
+        photo_ids in request body. Each action written individually to audit_log.
+        Max 50 photos per bulk action (spec F11 acceptance criteria).
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PhotoId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  enum: [approve, reject]
+                rejection_reason:
+                  type: string
+                  maxLength: 500
+                  description: Required for reject action
+                bulk_photo_ids:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  maxItems: 50
+                  description: >
+                    If provided, applies the action to all listed photo IDs
+                    AND the photoId in the path. Max 50.
+      responses:
+        '200':
+          description: Action applied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  processed_count:
+                    type: integer
+                  audit_entry_ids:
+                    type: array
+                    items:
+                      type: integer
+        '400':
+          description: rejection_reason required for reject action or bulk_photo_ids exceeds 50
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  # ============================================================
+  # COUNTIES / DISCOVERY (F2, F14 SEO pages)
+  # ============================================================
+
+  /counties:
+    get:
+      operationId: listCounties
+      summary: List counties with listing counts
+      description: >
+        Returns all counties that have at least one active listing, with
+        listing counts broken down by listing type. Used for Discover page
+        and county landing page index. SSR-compatible (no auth required).
+      tags: [Discovery]
+      parameters:
+        - name: country
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Counties with listing counts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CountySummary'
+
+  /counties/{country}/{county}:
+    get:
+      operationId: getCountyListings
+      summary: Get listings for a county landing page
+      description: >
+        Returns SSR-ready listing data for a county landing page (paginated HTML
+        list view). No authentication required. Used by Next.js RSC for county
+        pages at /county/[country]/[county].
+      tags: [Discovery]
+      parameters:
+        - name: country
+          in: path
+          required: true
+          schema:
+            type: string
+            example: england
+        - name: county
+          in: path
+          required: true
+          schema:
+            type: string
+            example: lincolnshire
+        - name: listing_type
+          in: query
+          schema:
+            $ref: '#/components/schemas/ListingType'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+      responses:
+        '200':
+          description: County listing data for SSR
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [county_name, country, data, pagination]
+                properties:
+                  county_name:
+                    type: string
+                  country:
+                    type: string
+                  total_listings:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ListingSummary'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # ============================================================
+  # ANALYTICS EVENTS (server-side ingestion)
+  # ============================================================
+
+  /events:
+    post:
+      operationId: trackEvent
+      summary: Record a server-side analytics event
+      description: >
+        Internal endpoint called by Next.js RSC and API handlers to record
+        business events (listing_page_view, map_pin_click, etc.) in the
+        analytics_events table. No PII stored. Rate limited per IP.
+      tags: [Analytics]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [event_type]
+              properties:
+                event_type:
+                  type: string
+                  enum:
+                    - listing_page_view
+                    - listing_pin_click
+                    - claim_cta_click
+                    - subscription_upgrade_initiated
+                    - subscription_upgrade_completed
+                    - waitlist_signup
+                    - review_submission
+                    - enquiry_form_submission
+                listing_id:
+                  type: string
+                  format: uuid
+                  nullable: true
+                source:
+                  type: string
+                  enum: [organic, direct, social, referral]
+                metadata:
+                  type: object
+                  description: Additional context with no PII
+                  additionalProperties: true
+      responses:
+        '204':
+          description: Event recorded
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+tags:
+  - name: Listings
+    description: Listing browse, search, and management
+  - name: Reviews
+    description: Consumer reviews and ratings (F5)
+  - name: Waitlist
+    description: Ordering waitlist email capture (F6)
+  - name: Claim
+    description: Listing claim flow (F3)
+  - name: Photos
+    description: Photo upload and management (F4)
+  - name: Subscriptions
+    description: Subscription management — Bronze/Silver/Gold (F7–F10)
+  - name: Webhooks
+    description: Stripe webhook handlers
+  - name: Products
+    description: Product catalogue management (F13)
+  - name: Orders
+    description: Marketplace order flow (F8)
+  - name: Managers
+    description: Multi-manager invitation and management (F16)
+  - name: Analytics
+    description: Listing analytics dashboard (F22)
+  - name: Delivery
+    description: Delivery zone configuration (F18)
+  - name: Admin
+    description: Admin console — moderation queues (F11)
+  - name: Discovery
+    description: County and region discovery pages (F2, F14)

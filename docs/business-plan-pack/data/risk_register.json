@@ -1,0 +1,231 @@
+{
+  "version": "1.0.0",
+  "produced_at": "2026-05-17",
+  "risk_rating_methodology": "Likelihood (1=rare, 5=almost certain) × Impact (1=negligible, 5=critical) = Risk Score. HIGH ≥10; MEDIUM 5–9; LOW 1–4.",
+  "risks": [
+    {
+      "risk_id": "MR-01",
+      "category": "Market",
+      "title": "Farm shop owner adoption slower than modelled",
+      "description": "The base case assumes 15% claim rate at Month 12 and 6% of claimed listings convert to Bronze. Both depend on consumer traffic reaching the 100k/month threshold and farm shop owners having bandwidth to engage with a new digital channel. The 50–70 demographic's prior directory scepticism (BigBarn experience) is documented. If organic claim rate is 5% not 15%, and conversion is 2% not 6%, Bronze revenue is materially lower than modelled.",
+      "likelihood": 3,
+      "impact": 5,
+      "risk_score": 15,
+      "rating": "HIGH",
+      "mitigation": "Traffic-triggered email fires automatically when a listing crosses 50 monthly sessions — no rep required. FRA partnership pursued from Month 1 converts cold to warm referral at 3× conversion. 90-day trial for first 50 subscribers reduces conversion barrier. Monthly claim rate and conversion rate tracked as primary KPIs; if below 10% claim rate by Month 6, accelerate direct outreach and agricultural show presence. Downside case modelled at 3% (financial-model.md) — confirms bootstrap viability if founder defers salary.",
+      "source_ids": ["src-saleability-critique", "src-financial-model"]
+    },
+    {
+      "risk_id": "MR-02",
+      "category": "Market",
+      "title": "Google Maps adds a native farm shop or honesty box category filter",
+      "description": "Google adds a 'farm shops' or 'honesty boxes' filter to Google Maps, providing the core J1 impulse discovery use case. Google has the consumer install base, location data, and technical capability; the question is whether category depth and SEO content are defensible.",
+      "likelihood": 2,
+      "impact": 4,
+      "risk_score": 8,
+      "rating": "MEDIUM",
+      "mitigation": "Build the SEO content surface (county guides, long-tail articles) as the primary durable traffic asset ranking for queries Google Maps does not serve. The Bronze/Silver/Gold commercial stack — analytics dashboard, product catalogue, marketplace — is not threatened by a Google category filter. Establish the review layer (F5) as rapidly as possible; Google Maps has no curated honesty box review corpus. Speed to market: SEO authority in farm shop and honesty box queries established before Google builds a competing product.",
+      "source_ids": ["src-competitor-matrix", "src-swot-analysis"]
+    },
+    {
+      "risk_id": "MR-03",
+      "category": "Market",
+      "title": "FRA builds or commissions its own modern directory",
+      "description": "The Farm Retail Association commissions a mobile-first rebuild of its member directory — whether via BigBarn or a new agency — combining Farmmap's UX advantage with FRA's pre-existing supply-side trust. This neutralises Farmmap's technology differentiation with 1,200 warm supply-side relationships.",
+      "likelihood": 2,
+      "impact": 4,
+      "risk_score": 8,
+      "rating": "MEDIUM",
+      "mitigation": "Pursue FRA partnership before V1 launch; offer data licence and co-branding, not white-label (white-label subordinates Farmmap roadmap). Pitch: 'Build the modern directory your members deserve, credited to FRA.' FRA's decision to invest in its own product is unlikely within 18 months given its balance sheet; getting to 100 Bronze subscribers before that decision is made proves Farmmap's credibility as the sector's preferred digital partner.",
+      "source_ids": ["src-swot-analysis", "src-saleability-critique"]
+    },
+    {
+      "risk_id": "MR-04",
+      "category": "Market",
+      "title": "VC-backed or media-backed entrant enters the farm shop directory space",
+      "description": "A well-funded entrant with editorial credibility (Country Living, Delicious, Countryfile), media-brand consumer audience, and FRA relationships enters the same space with capital for consumer acquisition and farm shop sales teams. Farmmap's 12–18 month window before a credible V1 replica can be built is the window of vulnerability.",
+      "likelihood": 2,
+      "impact": 4,
+      "risk_score": 8,
+      "rating": "MEDIUM",
+      "mitigation": "Speed to listing density and SEO authority are the primary moats. farmmap.co.uk exact-match domain, yourhonestybox.com partnership, and 953-listing head start are assets a new entrant cannot acquire. FRA endorsement — pursued from Month 1 — makes Farmmap the sector's endorsed digital partner, not just one among several directories.",
+      "source_ids": ["src-swot-analysis", "src-value-bench"]
+    },
+    {
+      "risk_id": "MR-05",
+      "category": "Market",
+      "title": "Consumer traffic fails to reach 100k monthly visitors by Month 12",
+      "description": "The 100,000 monthly visitor target underpins every Bronze sales conversation. If SEO execution is weak, content programme is under-resourced, or Core Web Vitals penalties suppress ranking, traffic may stall at 20,000–40,000 monthly visitors. At that level, the Bronze pitch cannot demonstrate meaningful consumer reach and conversion drops to the 1–2% range.",
+      "likelihood": 3,
+      "impact": 4,
+      "risk_score": 12,
+      "rating": "HIGH",
+      "mitigation": "Content/marketing budget allocated to county guide SEO articles from Month 1. Technical SEO (Core Web Vitals, JSON-LD markup, sitemap) at launch as a hard gate. PR campaign timed to launch for initial backlinks. If traffic below 30,000 at Month 6, consider Innovate UK grant application or angel seed to accelerate. Google Search Console and Plausible Analytics configured from Day 1 to identify underperforming pages before patterns solidify.",
+      "source_ids": ["src-go-to-market", "src-viability-gate"]
+    },
+    {
+      "risk_id": "MR-06",
+      "category": "Market",
+      "title": "yourhonestybox.com expands to UK farm shops and honesty boxes",
+      "description": "yourhonestybox.com is actively maintained and growing at 20–25%/year in Ireland/NI. Its rational next move is UK expansion — with incumbent brand equity in honesty boxes, a community trust relationship, and potential grievance if the data was used without a formal agreement.",
+      "likelihood": 2,
+      "impact": 3,
+      "risk_score": 6,
+      "rating": "MEDIUM",
+      "mitigation": "Formalise the yourhonestybox.com partnership agreement before V1 launch; a formal data licence creates alignment making UK expansion as a competitor economically irrational. Establish Farmmap's UK honesty box SEO authority in the first 6 months before yourhonestybox.com could expand.",
+      "source_ids": ["src-swot-analysis", "src-compliance-decision"]
+    },
+    {
+      "risk_id": "ER-01",
+      "category": "Execution",
+      "title": "Solo founder incapacity",
+      "description": "Farmmap is a solo founder business through at least Year 2. A health event, family emergency, or extended inability to work halts all operations: development, moderation, customer support, content programme. There is no redundancy in any operational function.",
+      "likelihood": 2,
+      "impact": 5,
+      "risk_score": 10,
+      "rating": "HIGH",
+      "mitigation": "All operational procedures documented before V1 launch (moderation workflows, customer email templates, Bronze onboarding steps). 90-day operational playbook maintained so a trusted contractor could keep the business running during a founder absence. Content/moderation contractor budgeted from Month 20 de-risks operational functions. Key person income protection insurance from Year 1 (~£30–60/month).",
+      "source_ids": ["src-risk-register", "src-funding-requirements"]
+    },
+    {
+      "risk_id": "ER-02",
+      "category": "Execution",
+      "title": "Bronze conversion at 3% not 6% (sensitivity case confirmed)",
+      "description": "The financial model's most sensitive variable: if the analytics dashboard fails to convert evidence into upgrades at the 6% base case — because traffic is insufficient, the UI is not compelling enough, or demographic resistance is greater than modelled — conversion stalls at the 3% downside case. Year 3 revenue falls to ~£26k; break-even moves to Month 60+.",
+      "likelihood": 3,
+      "impact": 4,
+      "risk_score": 12,
+      "rating": "HIGH",
+      "mitigation": "Analytics dashboard design optimised for the 'I didn't know you were here' moment. 90-day trial reduces conversion decision to a renewal decision (evidence-based). Traffic-triggered email times outreach to peak receptivity. FRA partnership converts cold to warm referral at 3× conversion rate. Monthly Bronze conversion tracked as primary KPI; if below 4% at Month 9, A/B test trial extension and pricing alternatives before assuming model failure.",
+      "source_ids": ["src-financial-model", "src-saleability-critique"]
+    },
+    {
+      "risk_id": "ER-03",
+      "category": "Execution",
+      "title": "SEO algorithm update penalises listing or directory sites",
+      "description": "Google algorithm updates have historically penalised thin, duplicate, or low-quality directory content. A Helpful Content Update or Core Algorithm Update post-launch could materially suppress Farmmap's organic rankings for county-level landing pages. BigBarn's historical traffic decline is partly attributable to algorithm changes.",
+      "likelihood": 3,
+      "impact": 4,
+      "risk_score": 12,
+      "rating": "HIGH",
+      "mitigation": "Build for quality from Day 1: original non-duplicate listing content, rich JSON-LD structured data, genuine consumer reviews (F5), editorial county guides that are substantively useful. Diversify traffic sources: build email waitlist from Month 1 (algorithm-proof). Monitor Core Web Vitals weekly in production. Google Search Console alerts for manual penalties configured from Day 1.",
+      "source_ids": ["src-risk-register", "src-go-to-market"]
+    },
+    {
+      "risk_id": "ER-04",
+      "category": "Execution",
+      "title": "Photo and review moderation volume overwhelms solo admin",
+      "description": "At 25% claim rate at Month 18 (238 listings), the moderation queue could generate 200+ items per month by Year 2. The solo admin cannot moderate this volume while also maintaining the SEO content programme, which is the load-bearing assumption of the commercial model.",
+      "likelihood": 3,
+      "impact": 3,
+      "risk_score": 9,
+      "rating": "MEDIUM",
+      "mitigation": "AI-assisted photo pre-screening (F24) prioritised as early Should-Have feature post-V1. Content/moderation contractor budgeted from Month 18. Moderation queue design (F11) includes bulk-approve for obvious passes. Review moderation SLA 24 hours with escalation to founder when queue exceeds 48-hour age on any item.",
+      "source_ids": ["src-risk-register", "src-personas"]
+    },
+    {
+      "risk_id": "FR-01",
+      "category": "Financial",
+      "title": "Year 1 cash position exhausted before Bronze revenue sufficient",
+      "description": "The financial model projects a closing Year 1 cash balance of approximately –£360 (starting from £5,000 personal capital). The model is tight: any unbudgeted cost in Year 1 (legal fee for FRA agreement, compliance issue, content overspend) tips the business into a cash-negative position before Year 2 Bronze revenue begins.",
+      "likelihood": 3,
+      "impact": 4,
+      "risk_score": 12,
+      "rating": "HIGH",
+      "mitigation": "Stage all discretionary spend: content in tranches (one county guide per fortnight), legal costs event-triggered only. Identify Innovate UK SMART grant opportunity (£25k–100k for AgriTech; Q2 Year 1 application target). Personal credit facility as emergency backstop. Monitor monthly cash position against model; if below £1,000 at Month 9, trigger funding decision immediately.",
+      "source_ids": ["src-financial-model", "src-funding-requirements"]
+    },
+    {
+      "risk_id": "FR-02",
+      "category": "Financial",
+      "title": "Silver marketplace GMV lower than modelled",
+      "description": "The financial model assumes average Silver GMV of £800/month per shop in the early phase. If GMV is £400/month (half the base case), Silver commission revenue falls ~50%, extending break-even from Month 42–48 to Month 54+.",
+      "likelihood": 3,
+      "impact": 3,
+      "risk_score": 9,
+      "rating": "MEDIUM",
+      "mitigation": "F6 ordering waitlist captures demand intent from V1 launch; shops launching Silver have a pre-existing customer base. Silver onboarding includes automated announcement email to all waitlist subscribers (GMV-day-one mechanism). Target Silver launch for shops with demonstrated traffic (20+ waitlist sign-ups gate). Monitor Silver GMV per shop weekly in Year 2; if below £500/month after 3 months, invest in consumer content marketing specifically for the marketplace.",
+      "source_ids": ["src-financial-model", "src-risk-register"]
+    },
+    {
+      "risk_id": "FR-03",
+      "category": "Financial",
+      "title": "Stripe fee structure changes adversely",
+      "description": "Farmmap's financial model uses current Stripe UK pricing (2.9% + £0.30 for subscriptions; 0.25% for Connect payouts). Stripe fee changes could deteriorate the commission economics on Silver/Gold.",
+      "likelihood": 2,
+      "impact": 2,
+      "risk_score": 4,
+      "rating": "LOW",
+      "mitigation": "Monitor Stripe pricing announcements and update financial model quarterly. Evaluate Stripe alternatives (GoCardless, Adyen) at Year 2 if pricing diverges materially. Switching cost is low at this GMV level.",
+      "source_ids": ["src-risk-register", "src-stripe-uk-pricing-2025"]
+    },
+    {
+      "risk_id": "FR-04",
+      "category": "Financial",
+      "title": "Gold commission cap negotiation erodes Year 4–5 revenue",
+      "description": "Gold at 5% commission becomes economically rational for high-GMV shops to escape above £8,000/month GMV. A Gold shop generating £15,000+/month will calculate that Shopify Advanced + separate marketing agency may be cheaper than Gold. Commission cap design required before V3 commercial model is finalised.",
+      "likelihood": 2,
+      "impact": 3,
+      "risk_score": 6,
+      "rating": "MEDIUM",
+      "mitigation": "Design Gold commission cap before V3 commercial model is finalised (viability gate condition). Proposed cap: 5% on first £8,000 GMV/month, 3% above that, capped at £2,000/month commission per shop. Cap protects retention of highest-value shops while maintaining strong unit economics. Review quarterly: if no Gold shop approaches £8,000 threshold in Year 3, defer cap implementation.",
+      "source_ids": ["src-viability-gate", "src-pricing-hypothesis"]
+    },
+    {
+      "risk_id": "LR-01",
+      "category": "Legal and Compliance",
+      "title": "yourhonestybox.com database rights claim if formal agreement not executed",
+      "description": "If yourhonestybox.com's team identifies that 336 of their listings have been systematically extracted for a competing directory without a formal written agreement, a database rights claim under EU Database Directive (Ireland) or UK sui generis database right is legally credible. Remedy could include injunction to remove Irish listings, damages, and adverse publicity in the Irish market. This is the highest-probability single-event catastrophic risk in the portfolio.",
+      "likelihood": 2,
+      "impact": 5,
+      "risk_score": 10,
+      "rating": "HIGH",
+      "mitigation": "Execute formal data licence agreement with yourhonestybox.com before V1 launch (compliance condition V1-C3 — human co-sign required). Until written confirmation covers commercial use, the 336 listings must not be served publicly. Resolution options in priority order: (1) formal data licence agreement — strategic preference; (2) replace 336 listings with independently sourced Irish data; (3) launch without Irish listings and rebuild. All are achievable; option (1) is both the fastest and most strategically valuable.",
+      "source_ids": ["src-compliance-decision", "src-swot-analysis"]
+    },
+    {
+      "risk_id": "LR-02",
+      "category": "Legal and Compliance",
+      "title": "Food safety incident linked to a Farmmap-listed Silver/Gold shop",
+      "description": "A consumer purchases food via a Farmmap Silver/Gold listing and suffers an allergic reaction or food poisoning from incorrect allergen information on a listing. Even where Farmmap is not the food business operator, the reputational liability is Farmmap's regardless of legal determination. FSA online marketplace compliance monitoring programme (2024) explicitly targets platforms.",
+      "likelihood": 2,
+      "impact": 5,
+      "risk_score": 10,
+      "rating": "HIGH",
+      "mitigation": "Allergen fields (14 regulated allergens) mandatory and technically gated before any product is purchasable (F8 spec requirement). Human legal review of allergen liability position required before V3 launch (compliance condition V3-C1 — human co-sign). Allergen disclaimer on all product pages. ToS allergen warranty clause with indemnity from shop operators. Food business registration declaration mandatory in Silver/Gold onboarding (V3-C6). 30-day mitigation: brief a solicitor experienced in food law to scope the legal review engagement before V3 design is finalised.",
+      "source_ids": ["src-compliance-decision", "src-risk-register"]
+    },
+    {
+      "risk_id": "LR-03",
+      "category": "Legal and Compliance",
+      "title": "UK GDPR or EU GDPR data breach triggering dual regulator notification",
+      "description": "A data breach exposing farm shop owner account data (C3 — Customer PII per the Constitution) or consumer account data triggers dual ICO/DPC notification obligations (72-hour rule for both regulators). A breach affecting significant records could result in regulatory investigation and fine from either or both regulators.",
+      "likelihood": 2,
+      "impact": 4,
+      "risk_score": 8,
+      "rating": "MEDIUM",
+      "mitigation": "EU GDPR Article 27 representative appointed before V1 launch (V1-C2). Breach notification procedures documented and tested before V1 launch (V1-C6). Password hashing at rest, session token rotation on login, 8-hour admin session expiry. Supabase managed infrastructure with row-level security policies. Admin impersonation log immutable and auditable (F11 spec requirement). 30-day mitigation: appoint EU GDPR representative service (£500–2,000/year; straightforward for a bootstrapped business).",
+      "source_ids": ["src-compliance-decision", "src-risk-register"]
+    }
+  ],
+  "top_3_risks_with_30_day_mitigations": [
+    {
+      "risk_id": "LR-01",
+      "risk_title": "yourhonestybox.com database rights claim",
+      "why_top_3": "The only item in the risk register that represents a plausible single-event catastrophe removable by a specific, bounded action. The formal data licence agreement is achievable within 30 days at low cost.",
+      "mitigation_30_day": "Contact yourhonestybox.com founder/team directly with a partnership proposal: offer formal data licence for the 336 listings plus co-branding and a commercial relationship (e.g., yourhonestybox.com referred to on all Irish/NI listings). Target: signed data licence agreement within 30 days. If agreement cannot be reached in 30 days, begin replacing the 336 listings with independently sourced Irish data as a parallel track. Do not approach V1 launch without this resolved."
+    },
+    {
+      "risk_id": "MR-01",
+      "risk_title": "Farm shop owner adoption slower than modelled",
+      "why_top_3": "The financial model's most sensitive assumption (6% Bronze conversion) feeds every downstream revenue metric. Validating or falsifying this assumption early determines whether the bootstrap plan holds or angel funding becomes necessary.",
+      "mitigation_30_day": "Conduct 10–15 farm shop owner interviews in the first 30 days (founder-led). Script: 'If Farmmap showed you that 50 people had viewed your farm shop listing in the last month, what would you do?' Collect the response distribution. If fewer than 5 of 15 express any interest in paying £20/month, revise the Bronze onboarding strategy (more aggressive trial period, lower traffic threshold for email trigger) before V1 launch."
+    },
+    {
+      "risk_id": "FR-01",
+      "risk_title": "Year 1 cash position exhausted before Bronze revenue",
+      "why_top_3": "The £5,000 capital injection is insufficient to cover all Year 1 costs without careful timing. Cash constraint in Year 1 forces a choice between slowing the content programme (which undermines the traffic target) or accelerating funding activity.",
+      "mitigation_30_day": "Stage the Year 1 spending plan explicitly in Month 1: allocate exact budget to each quarter, identify which costs can be deferred, and set a Month 6 cash checkpoint at £1,000 minimum balance. Begin drafting the Innovate UK SMART grant application in Month 2–3 as a parallel track. Identify specific Innovate UK competitions relevant to rural digitalisation/AgriTech (KTP, SMART, or Sustainable Agriculture call) before submitting to the right programme."
+    }
+  ]
+}

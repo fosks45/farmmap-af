@@ -1,0 +1,230 @@
+{
+  "scope": "UK farm shop, honesty box, and farm gate stall directory and marketplace; United Kingdom and Republic of Ireland; 2026–2029 horizon",
+  "dimensions": [
+    {
+      "dimension": "Political",
+      "factors": [
+        {
+          "factor": "P1 — ELM scheme phasing out BPS direct payments (England)",
+          "direction": "Tailwind",
+          "magnitude": "High",
+          "implication": "England's Basic Payment Scheme ceases entirely by 2027 under the Agricultural Transition Plan. NFU Diversification Survey 2023: 38% of farms planning to diversify intend to open or expand farm retail. Farmmap's launch timing (2026) positions it at the peak of this supply-side expansion wave — the addressable listing universe is growing, not contracting.",
+          "source_ids": ["src-defra-atp-2024"]
+        },
+        {
+          "factor": "P2 — Scotland and Wales: devolved support divergence",
+          "direction": "Neutral/Headwind",
+          "magnitude": "Medium",
+          "implication": "Scotland (Agriculture and Rural Communities Act 2024) and Wales (Sustainable Farming Scheme) maintain direct support longer than England, reducing diversification pressure. Scotland has 85 and Wales 67 seed listings — organic supply-side growth in these nations will lag England. FRA relationship (primarily England-focused) is more critical for Scottish and Welsh listing growth.",
+          "source_ids": ["src-scot-arc-act-2024", "src-wales-sfs"]
+        },
+        {
+          "factor": "P3 — UK Government 'Buy British' and local food policy",
+          "direction": "Tailwind",
+          "magnitude": "Medium",
+          "implication": "UK Food Security Report 2024 (Defra) explicitly identifies short food supply chains as contributors to national food resilience. The policy environment validates Farmmap's 'Find local. Support local.' positioning and provides earned media hooks when local food initiatives are announced.",
+          "source_ids": ["src-defra-food-security-2024"]
+        },
+        {
+          "factor": "P4 — Republic of Ireland: LEADER programme and rural digital investment",
+          "direction": "Tailwind",
+          "magnitude": "Medium",
+          "implication": "EU LEADER rural development measure (€180m, CAP Strategic Plan 2023–2027) provides grant support to Irish rural communities for digital capability. Irish farm shops may access grant support for Bronze tier subscriptions; LEADER Local Action Groups are potential Farmmap outreach partners for the Irish market.",
+          "source_ids": ["src-ireland-cap-2023", "src-leader-eu"]
+        },
+        {
+          "factor": "P5 — Windsor Framework and NI cross-border food commerce",
+          "direction": "Neutral",
+          "magnitude": "Low",
+          "implication": "NI–RoI delivery requires UKCA and EU food labelling compliance under the Windsor Framework. Intake correctly defers Republic of Ireland and NI online ordering to beyond V3. No material risk at V1 or V2.",
+          "source_ids": ["src-windsor-framework-2023"]
+        }
+      ]
+    },
+    {
+      "dimension": "Economic",
+      "factors": [
+        {
+          "factor": "E1 — Cost of living crisis: farm shops as premium spend under pressure",
+          "direction": "Headwind (moderating)",
+          "magnitude": "High (peak 2022–2024; medium 2025–2026)",
+          "implication": "UK food CPI reached 19.2% (March 2023, ONS); moderated to ~3.1% by Q1 2026. Farmmap's target ABC1 35–65 demographic was least affected. Launch timing coincides with the recovery phase. Consumer messaging should frame 'know where your money goes' rather than pure aspiration.",
+          "source_ids": ["src-ons-cpi-2023", "src-ons-cpi-2026"]
+        },
+        {
+          "factor": "E2 — Farm shop sector health and revenue growth",
+          "direction": "Tailwind",
+          "magnitude": "High",
+          "implication": "FRA Annual Farm Retail Survey 2023: average farm shop turnover £580k (up from £490k in 2021); 78% of shops reported turnover increase in 2022 vs 2021. A growing, financially healthy sector is more willing to invest in digital tools. The FRA sector health data is Farmmap's most important sales collateral.",
+          "source_ids": ["src-fra-survey-2023"]
+        },
+        {
+          "factor": "E3 — SME digital marketing budget constraints",
+          "direction": "Headwind",
+          "magnitude": "Medium",
+          "implication": "FRA Digital Adoption Survey 2022: median annual digital marketing spend for those investing is £800–£1,500/year — broadly aligned with Bronze annual cost (£240) but leaving limited margin for Silver (£720) or Gold (£1,200) without demonstrated ROI. Bronze pricing is well-calibrated; Silver and Gold adoption requires GMV evidence.",
+          "source_ids": ["src-fra-digital"]
+        },
+        {
+          "factor": "E4 — Interest rates and rural business investment",
+          "direction": "Headwind",
+          "magnitude": "Low",
+          "implication": "Bank of England base rate peaked at 5.25% (August 2023), declining to ~4.25% by Q1 2026. Normalising rate environment (OBR forecast through 2027) supports farm business investment recovery. Not a material Farmmap-specific risk.",
+          "source_ids": ["src-boe-mpc", "src-obr-march-2026"]
+        }
+      ]
+    },
+    {
+      "dimension": "Social",
+      "factors": [
+        {
+          "factor": "S1 — 'Know your farmer' food provenance trend post-COVID",
+          "direction": "Tailwind",
+          "magnitude": "High",
+          "implication": "FSA Food and You 2 Wave 7 (2024): 43% of UK adults value locally produced food (22.3 million adults). IGD Shopper Vista 2021: 52% reported increased importance of food provenance since COVID, up from 39% in 2019. FRA documented corresponding farm shop footfall increases in 2020–2021. Trend has shown sufficient stickiness through the cost of living crisis to be treated as structural. Farmmap's SEO strategy should be built entirely around provenance search queries.",
+          "source_ids": ["src-fsa-foodandyou", "src-igd-shoppervista-2021", "src-wrap-citizenfood-2022"]
+        },
+        {
+          "factor": "S2 — Ageing farm owner demographic: technology adoption headwind",
+          "direction": "Headwind",
+          "magnitude": "High",
+          "implication": "Average UK farm business principal age: 59 years (AHDB/Defra, Agricultural Land and Labour, 2023). OFCOM Adults' Media Use 2024: 27% of adults over 65 report no smartphone use. AHDB Farm Business Survey 2023: 41% of farm managers above 60 have no daily email account. Cold email open rates sub-5% for this demographic. Acquisition model must be human-touchpoint first — FRA partnership, rep visits, agricultural shows — not email-first.",
+          "source_ids": ["src-ahdb-farm-labour-2023", "src-ofcom-media-2024"]
+        },
+        {
+          "factor": "S3 — Younger consumers and direct-from-farm purchasing",
+          "direction": "Tailwind",
+          "magnitude": "Medium",
+          "implication": "FARMA: farmers market footfall grew 12% in 2023, driven by 18–35 attendance. Riverford Annual Impact Report 2023: fastest-growing customer segment is 25–35 urban consumers. The younger cohort is the viral growth vector for V1: shareable pins, Instagram posts, TikTok honesty box discovery. Social sharing functionality must be optimised for this cohort.",
+          "source_ids": ["src-farma-footfall-2023", "src-riverford-2023"]
+        },
+        {
+          "factor": "S4 — Supermarket 'fake farm' brand trust erosion",
+          "direction": "Tailwind",
+          "magnitude": "Medium",
+          "implication": "BBC Panorama (2020) documented consumer belief that supermarket farm brand products came from named farms when they did not. Soil Association YouGov poll (2022): 68% of UK consumers sceptical of supermarket 'natural' or 'farm fresh' labelling; 71% cited buying directly from a named farm shop as the most trusted provenance verification. 'Real farms. Real people.' is a legitimate and resonant positioning for Farmmap.",
+          "source_ids": ["src-bbc-fakefarms-2020", "src-soilassoc-yougov-2022"]
+        }
+      ]
+    },
+    {
+      "dimension": "Technological",
+      "factors": [
+        {
+          "factor": "T1 — Google Maps dominance: opportunity gap in niche discovery",
+          "direction": "Neutral/Headwind",
+          "magnitude": "High",
+          "implication": "Google Maps has 1.8bn monthly active users. Farm shops appear as Google Business Profiles but 43% have incorrect/stale data (AHDB Farm Business Survey 2023). Google Maps has no honesty box category, no product catalogue, no seasonal filter, no farm shop-specific filtering, and no marketplace. SEO for 'farm shop near me' and 'honesty box near me' long-tail queries — not map technology competition — is the correct competitive response.",
+          "source_ids": ["src-ahdb-farm-survey-2023", "src-google-maps-product"]
+        },
+        {
+          "factor": "T2 — PostGIS and Stripe Connect Standard: mature fit-for-purpose stack",
+          "direction": "Tailwind",
+          "magnitude": "High",
+          "implication": "PostGIS on Supabase is production-grade for the spatial queries that underpin a map-first directory. Stripe Connect Standard positions the farm shop as merchant of record, correctly avoiding FCA Payment Services Regulations registration. Both technology decisions in the intake are confirmed correct by the compliance assessment.",
+          "source_ids": ["src-stripe-connect-docs", "src-fca-psr-2017"]
+        },
+        {
+          "factor": "T3 — yourhonestybox.com technology gap",
+          "direction": "Neutral",
+          "magnitude": "Medium",
+          "implication": "yourhonestybox.com uses WordPress/Google Maps API; no PostGIS, no owner dashboard, no Stripe Connect, no subscription model (Wappalyzer analysis Q1 2026, directional). Farmmap's technology capability advantage is genuine. The risk is not technical replication by yourhonestybox.com but geographic speed — they could expand to UK honesty boxes using their simpler stack before Farmmap achieves UK listing density.",
+          "source_ids": ["src-yourhonestybox"]
+        },
+        {
+          "factor": "T4 — AI content moderation accessibility",
+          "direction": "Tailwind",
+          "magnitude": "Medium",
+          "implication": "Google Cloud Vision API Web Detection (~$0.0035/image) can identify stock photos used as product images at scale. Available to a bootstrap business from Day 1. Pragmatic choice for photo moderation: auto-flag potential stock photos for manual review, not auto-reject. TinEye free tier adequate for early-stage validation. F24 AI moderation should be prioritised as early Should-Have post-V1 to manage the moderation queue before it overwhelms solo admin.",
+          "source_ids": ["src-google-vision-api"]
+        }
+      ]
+    },
+    {
+      "dimension": "Legal",
+      "factors": [
+        {
+          "factor": "L1 — Natasha's Law: allergen labelling for online food sales",
+          "direction": "Headwind",
+          "magnitude": "High",
+          "implication": "Food Information (Amendment) (England) Regulations 2021 (in force October 2021) requires full allergen information on PPDS food. For Silver/Gold marketplace: all 14 regulated allergens must be mandatory fields in the product catalogue schema before any product is purchasable. FSA online marketplace compliance monitoring programme (2024) explicitly targets platforms. Non-compliance creates criminal liability for farm shop operators and reputational liability for Farmmap. Compliance condition V3-C1 (human co-sign) required before marketplace launch.",
+          "source_ids": ["src-natasha-law-2021", "src-fsa-marketplace-guidance-2022"]
+        },
+        {
+          "factor": "L2 — UK GDPR / EU GDPR dual jurisdiction",
+          "direction": "Headwind",
+          "magnitude": "Medium",
+          "implication": "Farmmap serves UK users (ICO, UK GDPR) and ROI users (DPC, EU GDPR). Dual privacy policy, EU GDPR Article 27 representative appointment (Ireland), and dual breach notification procedures (72-hour rule for both regulators) are V1 blockers per compliance decision. Compliance risk classification: Medium. Managing both regulators adds overhead but does not create prohibitive regulatory risk.",
+          "source_ids": ["src-uk-gdpr-2018", "src-eu-gdpr-2016", "src-dpc-guidance"]
+        },
+        {
+          "factor": "L3 — yourhonestybox.com database rights (pre-launch blocker)",
+          "direction": "Headwind",
+          "magnitude": "Critical (pre-launch)",
+          "implication": "336 Irish/NI listings sourced from yourhonestybox.com engage EU Database Directive (Directive 96/9/EC, operative in Ireland) and UK sui generis database right (SI 1997/3032). Written consent confirmed by yourhonestybox.com — formal data licence agreement required before V1 launch (compliance condition V1-C3, human co-sign). Until documented, the 336 listings must not be served publicly.",
+          "source_ids": ["src-eu-database-directive", "src-uk-database-regs-1997"]
+        },
+        {
+          "factor": "L4 — Consumer Contracts Regulations 2013 / DMCC 2024",
+          "direction": "Headwind",
+          "magnitude": "Medium",
+          "implication": "CCR 2013 pre-contractual information requirements and DMCC 2024 auto-renewal notification obligations are V2 blockers. 14-day cancellation right for paid subscriptions. Perishable food is excluded from the 14-day withdrawal right (CCR 2013 Regulation 27(1)(b)) — simplifies Silver/Gold marketplace checkout design.",
+          "source_ids": ["src-ccr-2013", "src-dmcc-2024"]
+        },
+        {
+          "factor": "L5 — Online Safety Act 2023",
+          "direction": "Headwind",
+          "magnitude": "Low",
+          "implication": "OSA 2023 illegal content risk assessment required before consumer reviews feature (F5) launches at V2. Pre-moderation model for reviews and photos is a strong OSA compliance position. 'Potentially illegal content' must be a distinct reporting category in the admin console. Farmmap is small enough to be outside OSA's Category 1/2A thresholds; compliance overhead is limited but requires documentation.",
+          "source_ids": ["src-osa-2023"]
+        }
+      ]
+    },
+    {
+      "dimension": "Environmental",
+      "factors": [
+        {
+          "factor": "En1 — Food miles and local food sustainability positioning",
+          "direction": "Tailwind",
+          "magnitude": "Medium",
+          "implication": "Consumer heuristic 'local food = lower food miles = better for environment' is persistent and drives purchasing behaviour independently of scientific accuracy (Carbon Trust, WRAP). Eat Seasonably / Soil Association data confirms this. Farmmap should position around 'shorter journeys from farm to table' (defensible) rather than making specific carbon claims (not defensible without LCA). CMA Green Claims Code (2021) requires evidenced environmental claims in advertising.",
+          "source_ids": ["src-carbon-trust-2021", "src-wrap-carbon-2023", "src-cma-greenclaims-2021"]
+        },
+        {
+          "factor": "En2 — Seasonal availability constraints on farm shop e-commerce",
+          "direction": "Headwind",
+          "magnitude": "Medium",
+          "implication": "Farm shop produce is inherently seasonal; stock levels fluctuate with harvest timing and weather. AHDB: UK strawberry production down 23% in 2023 due to excessive rainfall. Silver/Gold product catalogue must treat seasonality as a first-class concept, not an edge case. V3 product states should include: 'Available now', 'Back in stock: estimated [month]', 'Seasonal — check availability'.",
+          "source_ids": ["src-ahdb-horticulture-2023"]
+        }
+      ]
+    }
+  ],
+  "binding_constraints": [
+    {
+      "constraint": "yourhonestybox.com data licence agreement (V1-C3)",
+      "description": "Written consent from yourhonestybox.com must be formally documented before the 336 Irish/NI listings go live. Without this, Farmmap's most differentiated territorial position is legally at risk. This is the single highest-priority legal action pre-launch.",
+      "deadline": "Before V1 launch",
+      "human_cosign_required": true
+    },
+    {
+      "constraint": "Natasha's Law allergen compliance for marketplace (V3-C1)",
+      "description": "14 regulated allergen fields mandatory in Silver/Gold product catalogue before any food product is purchasable. Human legal review of allergen liability in negligence required before V3 launch. FSA online marketplace compliance monitoring programme targets platforms explicitly.",
+      "deadline": "Before V3 launch",
+      "human_cosign_required": true
+    },
+    {
+      "constraint": "Dual ICO/DPC privacy compliance (V1-C1, V1-C2)",
+      "description": "Dual privacy policy addressing both UK GDPR (ICO) and EU GDPR (DPC) required; EU GDPR Article 27 representative appointed in Ireland before V1 launch. Breach notification procedures covering both regulators (72-hour rule) documented and tested.",
+      "deadline": "Before V1 launch",
+      "human_cosign_required": true
+    }
+  ],
+  "background_context": [
+    "ELM transition is the strongest structural supply-side tailwind — the supply of new farm shops and honesty boxes is growing through 2025–2030, expanding Farmmap's addressable listing universe",
+    "Google Maps is the primary consumer discovery default — Farmmap's competitive strategy is SEO authority in farm shop-specific long-tail queries, not map technology superiority",
+    "The cost of living crisis (2022–2024) is moderating; Farmmap's launch coincides with the consumer spending recovery phase, improving the farm shop sector investment environment",
+    "Stripe Connect Standard's regulatory architecture (shop as merchant of record) is confirmed correct by the compliance assessment — no FCA registration required"
+  ],
+  "strategic_implications": "The most significant environmental forces acting on Farmmap are: (1) the ELM-driven supply-side expansion of farm retail increasing the addressable listing universe through 2027; (2) the post-COVID structural increase in consumer demand for local food provenance driving organic search volume; and (3) the ageing farm owner demographic requiring a human-touchpoint acquisition model rather than a digital-only funnel. Farmmap's product and commercial strategy is well-aligned to factors (1) and (2); the primary execution risk is factor (3), which requires the FRA partnership and agricultural show presence to be operational before cold digital outreach is relied upon. The legal environment creates bounded, manageable compliance obligations that are achievable within a normal pre-launch timeline; the yourhonestybox.com data licence agreement is the only item that could be a catastrophic single-event risk if left unresolved at launch."
+}

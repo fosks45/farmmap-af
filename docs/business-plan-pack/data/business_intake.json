@@ -1,0 +1,104 @@
+{
+  "business_name": "Farmmap",
+  "working_title": "farmmap.co.uk",
+  "business_idea_summary": "A map-first, mobile-first directory of farm shops, honesty boxes, farm gate stalls, and roadside produce stands across the United Kingdom and Republic of Ireland. Consumers browse for free; farm shop owners claim listings for free and can upgrade to paid tiers for branded presence and marketplace capability.",
+  "product_or_service": "Freemium SaaS directory platform with three monetisation tiers: Bronze (branded listing, £20/month), Silver (marketplace + ordering, £60/month + 3% commission), Gold (Silver + managed marketing service, £100/month + 5% commission). Multi-tenant architecture supports portfolio expansion to adjacent verticals.",
+  "target_customer": {
+    "consumer_side": "ABC1 adults aged 35–65, rural or semi-rural access, who value local food provenance. Primary persona: weekend drivers and cyclists who want to discover farm shops and honesty boxes near them without planning ahead. 22.3 million UK adults self-identify as valuing local food (FSA Food and You 2, Wave 7, 2024).",
+    "supply_side": "UK and Republic of Ireland farm shop and honesty box owners. Primary target for Bronze: digitally absent farm shops (2,310 UK farms with no website, FRA Digital Adoption Survey 2022). Primary target for Silver/Gold: digitally engaged farm shop owners with existing customer bases seeking new customer acquisition and online revenue."
+  },
+  "geography": "United Kingdom (England, Scotland, Wales, Northern Ireland) and Republic of Ireland",
+  "business_model": "Freemium directory + subscription tiers (Bronze £20/month, Silver £60/month + 3% commission on orders ≥ £20, Gold £100/month + 5% commission on orders ≥ £30) + Stripe Connect Standard marketplace. Campaign add-ons available at Bronze tier (£50/campaign). Multi-tenant engine enables portfolio of 6+ adjacent verticals at low incremental cost.",
+  "stage_of_development": "Pre-launch — spec v1.0.0 signed off, architecture complete, build plan (8 sprints, 80 tasks) in progress. 953 seeded listings ready for V1 launch.",
+  "plan_purpose": "Founder strategy plan + investor-readiness. Demonstrates path from bootstrap to portfolio engine.",
+  "founders_or_team": [
+    {
+      "name": "Stu Fosks",
+      "role": "Founder",
+      "background": "Product and engineering background; agent-foundry methodology architect; sole founder at launch",
+      "note": "Operates as P5 Alex Kim persona for admin and content functions at launch"
+    }
+  ],
+  "known_competitors": [
+    {
+      "name": "yourhonestybox.com",
+      "territory": "Ireland and Northern Ireland",
+      "threat_level": "3/5",
+      "status": "Partner (data consent confirmed)"
+    },
+    {
+      "name": "Farm Retail Association Directory (farmerretail.co.uk)",
+      "territory": "UK",
+      "threat_level": "4/5",
+      "status": "Target for data-sharing partnership"
+    },
+    {
+      "name": "BigBarn (bigbarn.co.uk)",
+      "territory": "UK",
+      "threat_level": "3/5",
+      "status": "Active; £45k net assets; 24-year technical debt; declining SEO"
+    },
+    {
+      "name": "LocalFoodFinder",
+      "territory": "UK",
+      "threat_level": "1/5",
+      "status": "Inactive / effectively discontinued"
+    },
+    {
+      "name": "Farmdrop",
+      "territory": "UK",
+      "threat_level": "0/5",
+      "status": "Closed February 2022"
+    },
+    {
+      "name": "Google Maps",
+      "territory": "Global",
+      "threat_level": "2/5",
+      "status": "Distribution partner / SEO competitor for queries"
+    },
+    {
+      "name": "Facebook Business Pages",
+      "territory": "Global",
+      "threat_level": "2/5",
+      "status": "Serves existing audience; Farmmap serves new-audience discovery"
+    },
+    {
+      "name": "Yelp / TripAdvisor",
+      "territory": "Global / UK",
+      "threat_level": "1/5",
+      "status": "General platforms; farm shops appear incidentally"
+    }
+  ],
+  "existing_evidence": [
+    "953 seeded, verified listings at launch (417 English farm shops, 190 Irish honesty boxes, 73 NI honesty boxes, 37 Irish farm shops, 29 NI farm shops, 85 Scottish farm shops, 67 Welsh farm shops)",
+    "yourhonestybox.com — 336 Irish/NI listings obtained with explicit consent; partner relationship active",
+    "farmmap.co.uk exact-match domain owned; farmstor.com and farmstor.co.uk redirecting",
+    "FSA Food and You 2 Wave 7 (2024): 43% of UK adults value locally produced food (22.3m adults)",
+    "FRA Digital Adoption Survey 2022: 66% of UK farm shops have no website (2,310 shops)",
+    "FRA Annual Review 2023: 3,000–3,500 UK farm shops total; average turnover £580k (FRA Annual Farm Retail Survey 2023)",
+    "BigBarn Network Ltd Companies House filing: ~£45k net assets; micro-entity — not resourced for major rebuild",
+    "Viability gate score: 3.80/5.00 — clean GO verdict",
+    "Architecture phase complete: 10 ADRs, data model, OpenAPI contract, 8-sprint build plan"
+  ],
+  "known_financial_assumptions": [
+    "Total addressable listings: 5,700 (3,000 UK farm shops + 2,000 UK honesty boxes + 700 Ireland/NI)",
+    "Free-to-Bronze conversion: 6% base case, 3% downside, 10% upside (of claimed listings)",
+    "Bronze-to-Silver progression: 30% of Bronze shops after 6+ months",
+    "Year 3 base-case revenue: £164,000 (143 Bronze + 29 Silver + 18 Gold + £14,300 add-ons)",
+    "Year 5 base-case revenue: £286,000–£450,000 (with GMV compounding)",
+    "Portfolio Year 5 revenue (7 verticals): £2,205,000 at 4.9× multiplier",
+    "Customer acquisition cost: £45 (FRA channel), £85 (traffic-triggered email), £190 (rep visit)",
+    "Annual churn: 15% (Bronze/Silver), 12% (Gold)",
+    "Funding requirement: £5,000 personal capital at launch; no external funding to reach break-even"
+  ],
+  "open_questions": [
+    "FRA data-sharing or endorsement arrangement — CRITICAL pre-launch condition",
+    "yourhonestybox.com formal partnership agreement recommended before V1 launch",
+    "EU GDPR Article 27 representative appointment (Ireland) — pre-V1 legal action",
+    "Dual privacy policy (ICO + DPC) — pre-V1 legal document",
+    "Gold tier commission cap above £8,000/month GMV — to be confirmed in V3 commercial specification",
+    "Allergen liability legal opinion — required before V3 Silver/Gold marketplace launch",
+    "MapLibre tile service selection (MapTiler / Stadia Maps / self-hosted) — required before Sprint 1",
+    "Bronze add-on campaign SLA definition — required before V2 launch"
+  ]
+}

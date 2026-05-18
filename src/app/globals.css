@@ -1,0 +1,362 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens as CSS Custom Properties ─────────────────────────────
+   All values defined once here. Component code uses Tailwind token classes
+   which map back to these variables. No hex literals in component files.
+   ─────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Brand colours */
+  --color-brand-primary: #2D6A4F;
+  --color-brand-primary-hover: #245A42;
+  --color-brand-primary-light: #B7E4C7;
+  --color-brand-secondary: #3A5A8C;
+  --color-brand-secondary-hover: #2E497A;
+  --color-brand-secondary-light: #C8D8F0;
+
+  /* Surface colours */
+  --color-surface-default: #FFFFFF;
+  --color-surface-raised: #F8F6F2;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-map: #E5EFE8;
+  --color-surface-overlay: rgba(0, 0, 0, 0.5);
+  --color-surface-input: #FFFFFF;
+  --color-surface-input-focus: #F0F7F2;
+
+  /* Text colours */
+  --color-text-primary: #1A2E1F;
+  --color-text-secondary: #4A6050;
+  --color-text-tertiary: #7A9080;
+  --color-text-inverse: #FFFFFF;
+  --color-text-link: #2D6A4F;
+  --color-text-link-visited: #1E4D36;
+
+  /* Map pin colours */
+  --color-pin-free: #8B9E93;
+  --color-pin-free-stroke: #6A7D72;
+  --color-pin-claimed: #2D6A4F;
+  --color-pin-claimed-stroke: #1E4D36;
+  --color-pin-bronze: #B5651D;
+  --color-pin-bronze-stroke: #8A4A15;
+  --color-pin-silver: #3A5A8C;
+  --color-pin-silver-stroke: #2E497A;
+  --color-pin-gold: #C9A227;
+  --color-pin-gold-stroke: #9B7C1B;
+  --color-pin-honesty-stocked: #22A05A;
+  --color-pin-honesty-empty: #9BABA2;
+  --color-pin-closed: #C0C0C0;
+
+  /* Status colours */
+  --color-status-success: #22A05A;
+  --color-status-success-light: #D4EDDA;
+  --color-status-success-text: #145A35;
+  --color-status-warning: #D97706;
+  --color-status-warning-light: #FEF3C7;
+  --color-status-warning-text: #92400E;
+  --color-status-error: #DC2626;
+  --color-status-error-light: #FEE2E2;
+  --color-status-error-text: #991B1B;
+  --color-status-info: #3A5A8C;
+  --color-status-info-light: #EFF6FF;
+  --color-status-info-text: #1E3A5F;
+
+  /* Border colours */
+  --color-border-default: #D4DDD8;
+  --color-border-subtle: #E8EFEB;
+  --color-border-strong: #8B9E93;
+  --color-border-focus: #2D6A4F;
+  --color-border-error: #DC2626;
+
+  /* Typography */
+  --font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: "SF Mono", "Fira Code", "Fira Mono", monospace;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+
+  /* Spacing (base 4px) */
+  --spacing-0: 0px;
+  --spacing-0-5: 2px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 28px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+
+  /* Border radius */
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.10);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.16);
+  --shadow-pin: 0 2px 6px rgba(0, 0, 0, 0.30);
+
+  /* Motion */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --easing-ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --easing-ease-in: cubic-bezier(0.4, 0.0, 1, 1);
+  --easing-ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+  /* Z-index scale */
+  --z-base: 0;
+  --z-raised: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-map-pin: 300;
+  --z-modal-bg: 400;
+  --z-modal: 500;
+  --z-banner: 600;
+  --z-toast: 700;
+
+  /* Touch targets (WCAG 2.5.8) */
+  --touch-target-min: 24px;
+  --touch-target-recommended: 44px;
+  --touch-target-tap-bar: 56px;
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────────────── */
+/* WCAG 2.3.3 (AAA) + best practice */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Base styles ────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Smooth scroll for same-page anchors */
+  scroll-behavior: smooth;
+  /* Enable font size scaling by user preferences */
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-default);
+  /* Prevent horizontal overflow */
+  overflow-x: hidden;
+}
+
+/* ─── Focus visible styles (WCAG 2.4.7) ─────────────────────────────────── */
+/* Never suppress focus indicators. Only use :focus-visible so mouse users
+   don't see the ring, but keyboard users always do. */
+
+:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Remove default focus ring only when :focus-visible is used */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ─── Skip link (WCAG 2.4.1) ─────────────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: var(--spacing-4);
+  z-index: var(--z-toast);
+  padding: var(--spacing-2) var(--spacing-4);
+  background: var(--color-brand-primary);
+  color: var(--color-text-inverse);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: top var(--duration-fast) var(--easing-ease-out);
+}
+
+.skip-link:focus {
+  top: var(--spacing-4);
+}
+
+/* ─── Links ──────────────────────────────────────────────────────────────── */
+
+a {
+  color: var(--color-text-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:visited {
+  color: var(--color-text-link-visited);
+}
+
+a:hover {
+  color: var(--color-brand-primary-hover);
+}
+
+/* ─── Headings ───────────────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ─── Form elements ──────────────────────────────────────────────────────── */
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ─── Images ─────────────────────────────────────────────────────────────── */
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─── MapLibre GL map container ──────────────────────────────────────────── */
+
+.maplibre-map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom popup styling */
+.maplibregl-popup-content {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 0;
+  overflow: hidden;
+  max-width: 280px;
+}
+
+.maplibregl-popup-close-button {
+  font-size: 1rem;
+  padding: var(--spacing-2);
+  color: var(--color-text-secondary);
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+}
+
+/* ─── Bottom sheet (mobile listing panel) ────────────────────────────────── */
+
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-map-pin);
+  background: var(--color-surface-default);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: var(--shadow-xl);
+  transform: translateY(100%);
+  transition: transform var(--duration-normal) var(--easing-ease-out);
+}
+
+.bottom-sheet[data-open="true"] {
+  transform: translateY(0);
+}
+
+/* ─── Temporarily closed banner ──────────────────────────────────────────── */
+
+.closed-banner {
+  background: var(--color-status-warning-light);
+  color: var(--color-status-warning-text);
+  border-left: 4px solid var(--color-status-warning);
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ─── Tier badge colours ─────────────────────────────────────────────────── */
+
+[data-tier="bronze"] {
+  --tier-colour: var(--color-pin-bronze);
+}
+
+[data-tier="silver"] {
+  --tier-colour: var(--color-pin-silver);
+}
+
+[data-tier="gold"] {
+  --tier-colour: var(--color-pin-gold);
+}
+
+/* ─── Visually hidden utility (screen reader only) ───────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ─── Print styles ────────────────────────────────────────────────────────── */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-full {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}

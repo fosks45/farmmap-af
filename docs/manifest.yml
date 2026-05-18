@@ -1,0 +1,32 @@
+feature: 003-farmmap
+title: Farmmap — UK & Ireland Farm Shop and Honesty Box Directory
+type: new-feature
+status: in-spec
+current_phase: 4
+current_squad: compliance-risk-governance
+submitted_at: 2026-05-16T00:00:00Z
+submitted_by: stu-fosks
+target_repo_url: https://github.com/fosks45/farmmap-af
+spec_signed_off_at: 2026-05-16T00:00:00Z
+gates_passed:
+  - phase: 1
+    gate: discovery-go-no-go
+    status: proceed
+  - phase: 2
+    gate: market-viability
+    status: proceed
+  - phase: 2.5
+    gate: swot-synthesis-sign-off
+    status: passed
+  - phase: 2.5-V
+    gate: viability-go-no-go
+    verdict: go
+    score: 3.80
+  - phase: 3
+    gate: requirements-sign-off
+    status: passed
+spec_sign_off_decisions:
+  multiple_managers: multi-manager from v1 (overrides recommendation)
+  gold_tier_gating: gated — 3 months Silver + 50 completed orders
+  silver_bronze_downgrade: end of period
+  all_other_open_items: recommendations accepted

@@ -1,0 +1,132 @@
+import type { Config } from 'tailwindcss'
+
+const config: Config = {
+  darkMode: ['class'],
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Brand colours — map to CSS custom properties
+        brand: {
+          primary: 'var(--color-brand-primary)',
+          'primary-hover': 'var(--color-brand-primary-hover)',
+          'primary-light': 'var(--color-brand-primary-light)',
+          secondary: 'var(--color-brand-secondary)',
+          'secondary-hover': 'var(--color-brand-secondary-hover)',
+          'secondary-light': 'var(--color-brand-secondary-light)',
+        },
+        surface: {
+          default: 'var(--color-surface-default)',
+          raised: 'var(--color-surface-raised)',
+          elevated: 'var(--color-surface-elevated)',
+          map: 'var(--color-surface-map)',
+          overlay: 'var(--color-surface-overlay)',
+          input: 'var(--color-surface-input)',
+          'input-focus': 'var(--color-surface-input-focus)',
+        },
+        text: {
+          primary: 'var(--color-text-primary)',
+          secondary: 'var(--color-text-secondary)',
+          tertiary: 'var(--color-text-tertiary)',
+          inverse: 'var(--color-text-inverse)',
+          link: 'var(--color-text-link)',
+          'link-visited': 'var(--color-text-link-visited)',
+        },
+        pin: {
+          free: 'var(--color-pin-free)',
+          claimed: 'var(--color-pin-claimed)',
+          bronze: 'var(--color-pin-bronze)',
+          silver: 'var(--color-pin-silver)',
+          gold: 'var(--color-pin-gold)',
+        },
+        status: {
+          success: 'var(--color-status-success)',
+          'success-light': 'var(--color-status-success-light)',
+          'success-text': 'var(--color-status-success-text)',
+          warning: 'var(--color-status-warning)',
+          'warning-light': 'var(--color-status-warning-light)',
+          'warning-text': 'var(--color-status-warning-text)',
+          error: 'var(--color-status-error)',
+          'error-light': 'var(--color-status-error-light)',
+          'error-text': 'var(--color-status-error-text)',
+          info: 'var(--color-status-info)',
+          'info-light': 'var(--color-status-info-light)',
+          'info-text': 'var(--color-status-info-text)',
+        },
+        border: {
+          default: 'var(--color-border-default)',
+          subtle: 'var(--color-border-subtle)',
+          strong: 'var(--color-border-strong)',
+          focus: 'var(--color-border-focus)',
+          error: 'var(--color-border-error)',
+        },
+      },
+      fontFamily: {
+        sans: ['var(--font-family-sans)'],
+        mono: ['var(--font-family-mono)'],
+      },
+      fontSize: {
+        xs: ['var(--font-size-xs)', { lineHeight: 'var(--line-height-tight)' }],
+        sm: ['var(--font-size-sm)', { lineHeight: 'var(--line-height-snug)' }],
+        base: ['var(--font-size-base)', { lineHeight: 'var(--line-height-normal)' }],
+        lg: ['var(--font-size-lg)', { lineHeight: 'var(--line-height-snug)' }],
+        xl: ['var(--font-size-xl)', { lineHeight: 'var(--line-height-tight)' }],
+        '2xl': ['var(--font-size-2xl)', { lineHeight: 'var(--line-height-tight)' }],
+        '3xl': ['var(--font-size-3xl)', { lineHeight: 'var(--line-height-tight)' }],
+        '4xl': ['var(--font-size-4xl)', { lineHeight: 'var(--line-height-tight)' }],
+      },
+      spacing: {
+        'touch-min': 'var(--touch-target-min)',
+        'touch-rec': 'var(--touch-target-recommended)',
+        'touch-bar': 'var(--touch-target-tap-bar)',
+      },
+      borderRadius: {
+        none: '0px',
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        '2xl': 'var(--radius-2xl)',
+        full: 'var(--radius-full)',
+      },
+      boxShadow: {
+        sm: 'var(--shadow-sm)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
+        xl: 'var(--shadow-xl)',
+        pin: 'var(--shadow-pin)',
+      },
+      transitionDuration: {
+        instant: 'var(--duration-instant)',
+        fast: 'var(--duration-fast)',
+        normal: 'var(--duration-normal)',
+        slow: 'var(--duration-slow)',
+      },
+      zIndex: {
+        base: 'var(--z-base)',
+        raised: 'var(--z-raised)',
+        dropdown: 'var(--z-dropdown)',
+        sticky: 'var(--z-sticky)',
+        'map-pin': 'var(--z-map-pin)',
+        'modal-bg': 'var(--z-modal-bg)',
+        modal: 'var(--z-modal)',
+        banner: 'var(--z-banner)',
+        toast: 'var(--z-toast)',
+      },
+      screens: {
+        sm: '480px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+      },
+    },
+  },
+  plugins: [],
+}
+
+export default config

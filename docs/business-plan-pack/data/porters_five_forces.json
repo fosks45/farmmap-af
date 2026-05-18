@@ -1,0 +1,49 @@
+{
+  "market_definition": "UK and Ireland farm shop, honesty box, and farm gate stall digital directory and marketplace services",
+  "analysis_date": "2026-05-17",
+  "forces": [
+    {
+      "force": "Rivalry among existing competitors",
+      "rating": "Low",
+      "rating_score": 2,
+      "evidence": "BigBarn Network Ltd has ~£45k net assets (Companies House micro-entity filing); 24-year technical debt; no Stripe Connect marketplace; desktop-first UX failing Core Web Vitals. FRA directory is a member benefit bundled with trade body membership, not a standalone commercial product. yourhonestybox.com is Ireland/NI only with no commercial model and has confirmed a cooperative data relationship with Farmmap. LocalFoodFinder is inactive. Farmdrop closed February 2022. No well-funded direct competitor with a comparable product set exists in this market.",
+      "strategic_implication": "Low existing rivalry creates an 18-month execution window before a credible competitor can replicate Farmmap's V1 listing database and SEO authority. The primary competitive action required is speed to listing density and domain authority in farm shop-specific search queries, not defensive product differentiation against existing players.",
+      "source_ids": ["src-bigbarn-ch", "src-competitor-matrix"]
+    },
+    {
+      "force": "Threat of new entrants",
+      "rating": "Medium",
+      "rating_score": 3,
+      "evidence": "Technical barriers are low — a PostGIS + Next.js directory is within the capability of a competent development team with a modest budget. However, data acquisition (assembling 3,500+ farm shop listings with geocoded addresses and verified contact data) takes 12–18 months and requires either FRA data access or significant manual research. A VC-backed entrant with a media brand (Country Living, Delicious, Countryfile) or FRA endorsement could enter with substantial capital for consumer acquisition and farm shop sales teams. The 12–18 month window is Farmmap's primary urgency driver.",
+      "strategic_implication": "Speed to listing density, SEO authority, and the FRA partnership are the three components of the entry barrier Farmmap must build. The 953-listing launch dataset and yourhonestybox.com partnership are the most defensible early assets. A well-funded entrant cannot acquire the farmmap.co.uk exact-match domain, cannot replicate the yourhonestybox.com dataset, and faces the same ageing farm owner demographic acquisition challenge regardless of capital.",
+      "source_ids": ["src-competitor-matrix", "src-fra-survey-2023"]
+    },
+    {
+      "force": "Threat of substitutes",
+      "rating": "Medium",
+      "rating_score": 3,
+      "evidence": "Google Maps is the default consumer discovery platform and currently shows farm shops via Google Business Profile — but with 43% incorrect/stale data (AHDB Farm Business Survey 2023), no honesty box category, no product catalogue, and no browsable explore experience. Facebook Business Pages serve existing audiences but not new consumer discovery. Yell/TripAdvisor appear incidentally in farm shop searches but have no category depth. The most significant substitute threat is a Google Maps 'farm shop' filter enhancement, which would commoditise the J1 impulse discovery use case without requiring Google to build a marketplace.",
+      "strategic_implication": "Farmmap must reach consumers before they default to Google Maps. SEO authority for 'farm shop near me', 'honesty box near me', and county-level long-tail queries is the primary moat against Google substitution. The Bronze/Silver/Gold commercial stack — analytics dashboard, product catalogue, marketplace — differentiates Farmmap from any Google Maps enhancement because Google does not and will not offer these capabilities to individual small farm shops.",
+      "source_ids": ["src-ahdb-farm-survey-2023", "src-google-maps-product"]
+    },
+    {
+      "force": "Bargaining power of suppliers",
+      "rating": "Low",
+      "rating_score": 2,
+      "evidence": "Listing data is supplied by farm shops who benefit from visibility; no single farm shop controls meaningful leverage. OSM map tiles are available under the ODbL licence at zero cost. Supabase and Vercel are competitive infrastructure providers with alternative equivalents. Stripe's Connect Standard product is the de facto standard for UK marketplace payments. The yourhonestybox.com partnership is the one supplier relationship with meaningful leverage — loss of the 336 Irish listings would remove Farmmap's most differentiated territorial position.",
+      "strategic_implication": "Farmmap controls the consumer relationship and therefore controls the commercial relationship with farm shops. No individual farm shop or infrastructure provider can extract meaningful value through supplier leverage. The yourhonestybox.com agreement should be formalised as a data licence (not a simple consent) to convert the cooperative relationship into a structural agreement before either party's circumstances change.",
+      "source_ids": ["src-osm-odbl", "src-yourhonestybox"]
+    },
+    {
+      "force": "Bargaining power of buyers",
+      "rating": "Medium",
+      "rating_score": 3,
+      "evidence": "Farm shop owners are sceptical buyers with prior bad experience from Yell, BigBarn, and regional 'buy local' campaigns. Facebook and Google are free alternatives for serving existing audiences (not the same job as Farmmap, but the farm shop owner does not always perceive the difference). Bronze at £20/month is a low-friction subscription but the conversion from free to paid requires traffic evidence first. Silver and Gold buyers are more committed once marketplace GMV is established. Consumer buyers have zero switching cost — they use whichever tool finds them a shop nearest to them.",
+      "strategic_implication": "The traffic-triggered email acquisition mechanic and the traffic-first go-to-market phase are the correct responses to buyer power. Demonstrating value before asking for payment — showing owners their listing's session count before requesting Bronze subscription — converts sceptical buyers into committed ones. The analytics dashboard is not a feature; it is the mechanism by which buyer power is neutralised. The 90-day trial for first 50 subscribers further reduces the commitment barrier.",
+      "source_ids": ["src-saleability-critique", "src-pricing-hypothesis"]
+    }
+  ],
+  "overall_industry_attractiveness": "Attractive",
+  "attractiveness_rationale": "The farm shop directory space is structurally attractive: low existing rivalry with financially weak incumbents, a compounding data moat that takes 12–18 months to replicate, and a growing addressable market driven by ELM-scheme farm diversification. The primary structural threats (Google filter addition, VC-backed entrant) are not imminent within the 18-month window. The medium buyer power from sceptical farm shop owners is manageable through the traffic-first commercial model. The primary execution risk is the solo founder capacity constraint, not competitive or structural market dynamics.",
+  "summary": "Farmmap enters a low-rivalry market with weak incumbents and a compounding data acquisition moat. BigBarn's commercial decline (£45k net assets, 24-year technical debt) and the FRA directory's member-gated limitations leave the map-first, honesty-box-inclusive, UK+Ireland marketplace proposition entirely uncontested. The competitive battleground is SEO authority in farm shop-specific discovery queries and the FRA endorsement relationship — both of which are achievable within the 18-month execution window before a credible entrant could replicate V1. The two structurally significant threats — Google adding a farm shop category filter and a VC-backed media brand entrant — are real but not imminent, and Farmmap's SEO depth and review corpus will be defensible by the time either materialises."
+}

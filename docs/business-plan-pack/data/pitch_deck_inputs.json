@@ -1,0 +1,265 @@
+{
+  "version": "1.0.0",
+  "produced_at": "2026-05-17",
+  "deck_purpose": "Founder strategy plan and investor-readiness. Demonstrates path from bootstrap to portfolio engine.",
+
+  "slide_1_title": {
+    "company_name": "Farmmap",
+    "tagline": "Find local. Support local.",
+    "subtitle": "The map-first directory of every farm shop and honesty box in the UK and Ireland",
+    "presenter": "Stu Fosks, Founder",
+    "website": "farmmap.co.uk"
+  },
+
+  "slide_2_problem": {
+    "headline": "Farm shops are invisible to the people looking for them",
+    "problem_statement": "Farm shops and honesty boxes are invisible to digital discovery. 2,310 UK farm shops have no website. Consumers drive past them without knowing they exist.",
+    "evidence": [
+      "43% of UK adults value locally produced food — 22.3 million people — but 'don't know where to find one' is the top barrier to visiting (FRA Consumer Research 2023, FSA Food and You 2 Wave 7 2024)",
+      "66% of UK farm shops have no website; fewer than 15% have any e-commerce capability (FRA Digital Adoption Survey 2022)",
+      "43% of farm shops have incorrect or stale data on Google Maps (AHDB Farm Business Survey 2023)",
+      "No authoritative, browsable map of UK honesty boxes has ever existed"
+    ],
+    "problem_severity_score": "5/5 — viability gate"
+  },
+
+  "slide_3_solution": {
+    "headline": "Farmmap: the map every local food shopper needs",
+    "solution_statement": "Farmmap is the map-first, mobile-first directory of every farm shop and honesty box across the UK and Ireland. Free to browse, free to claim a listing, with subscription tiers for shops that want a branded presence and marketplace capability.",
+    "key_differentiators": [
+      "Honesty boxes as a first-class listing type — no UK competitor has this",
+      "UK and Ireland combined — no competitor covers both territories",
+      "Launching with 953 verified listings — no cold-start problem",
+      "farmmap.co.uk exact-match domain — durable, unacquirable SEO asset",
+      "Multi-tenant engine — 6+ adjacent verticals at low incremental cost once proven"
+    ],
+    "product_versions": [
+      {
+        "version": "V1 (Free Directory)",
+        "description": "Public map, no login to browse. Farm shops claim listings for free. No revenue — builds domain authority, audience, trust.",
+        "success_metric": "100,000 monthly map visitors within 12 months"
+      },
+      {
+        "version": "V2 (Bronze, £20/month)",
+        "description": "Branded shop page, logo, photos, product catalogue (display only), enquiry form, performance dashboard, verified badge."
+      },
+      {
+        "version": "V3 (Silver, £60/month + 3%)",
+        "description": "Full marketplace — online ordering, delivery zone configuration, Stripe Connect Standard marketplace. Shop is merchant of record."
+      },
+      {
+        "version": "V3 (Gold, £100/month + 5%)",
+        "description": "Silver plus done-for-you marketing service: newsletter feature, weekly social posts, homepage placement, quarterly blog post, priority search ranking."
+      }
+    ]
+  },
+
+  "slide_4_traction": {
+    "headline": "953 listings. One domain. One partnership. Ready to launch.",
+    "traction_points": [
+      "953 verified, geocoded listings across all five nations at launch (417 English farm shops, 190 Irish honesty boxes, 73 NI honesty boxes, 37 Irish farm shops, 29 NI farm shops, 85 Scottish farm shops, 67 Welsh farm shops)",
+      "yourhonestybox.com partnership confirmed: 336 Irish/NI honesty box listings obtained with explicit consent; formal data licence agreement in progress",
+      "farmmap.co.uk exact-match domain owned; farmstor.com and farmstor.co.uk redirecting",
+      "Architecture complete: Next.js 14, Supabase/PostGIS, MapLibre GL JS, Stripe Connect Standard; 8-sprint build plan (80 tasks) ready to execute",
+      "Viability gate score: 3.80/5.00 — clean GO verdict",
+      "Compliance assessment: Passed with Conditions — all conditions achievable within normal pre-launch timeline"
+    ]
+  },
+
+  "slide_5_market": {
+    "headline": "£1.8bn consumer spend. 5,700 digitally underserved listings.",
+    "tam": {
+      "value_gbp": 1767000000,
+      "description": "Total UK + Ireland local food direct-sales consumer spend annually: farm shops £1.425bn + farmers markets £255m + honesty boxes/gate stalls £87m (FRA, DEFRA, Bord Bia, FARMA data)"
+    },
+    "sam": {
+      "value_gbp": 400000,
+      "description": "Annual subscription and commission revenue potential from 5,700 serviceable listings at mature penetration rates (20% Bronze, 4% Silver)"
+    },
+    "som": {
+      "year_3_gbp": 164000,
+      "year_5_single_vertical_gbp": 286000,
+      "year_5_portfolio_gbp": 2205000,
+      "description": "Year 3 base case: 57 Bronze + 33 Silver + 10 Gold + add-ons = £163,892. Year 5 portfolio (7 verticals at 4.9× multiplier): £2,205,000."
+    },
+    "consumer_segment": "22.3 million UK adults who value locally produced food; 14.3 million across UK + Ireland",
+    "supply_segment": "5,700 digitally underserved farm shops and honesty boxes; 2,310 UK farm shops with no website at all"
+  },
+
+  "slide_6_business_model": {
+    "headline": "Freemium SaaS directory with subscription and marketplace commission",
+    "model_summary": "Free consumer browsing. Free listing claim. Three paid tiers with a natural progression from evidence to investment.",
+    "revenue_streams": [
+      {
+        "tier": "Bronze",
+        "pricing": "£20/month per shop",
+        "trigger": "Traffic evidence demonstrated on free listing → 90-day trial → renewal",
+        "unit_ltv_gbp": 1608
+      },
+      {
+        "tier": "Silver",
+        "pricing": "£60/month + 3% commission on orders ≥ £20",
+        "trigger": "Bronze shop sees marketplace ordering demand from consumer waitlist",
+        "unit_ltv_gbp": 9166
+      },
+      {
+        "tier": "Gold",
+        "pricing": "£100/month + 5% commission on orders ≥ £30",
+        "trigger": "Silver shop wants done-for-you marketing service; gated at 3 months Silver + 50+ orders",
+        "unit_ltv_gbp": 34860
+      },
+      {
+        "tier": "Campaign add-ons",
+        "pricing": "£50/campaign for Bronze; £100/campaign for Silver",
+        "trigger": "Seasonal promotion (Christmas, Easter, harvest)",
+        "unit_ltv_gbp": null
+      }
+    ],
+    "gross_margin_year3_percent": 93,
+    "key_cost_drivers": "Stripe fees (2.9% + £0.30 subscriptions; 0.25% Connect payouts); Supabase + Vercel infrastructure (£70/month at Year 2 scale); founder salary from Year 2; part-time contractor from Month 20"
+  },
+
+  "slide_7_go_to_market": {
+    "headline": "Traffic first. Evidence second. Commercial third.",
+    "strategy_summary": "Consumer traffic is the prerequisite for every commercial outcome. Every acquisition pound in Phase 1 and Phase 2 is spent building traffic, not selling subscriptions.",
+    "phases": [
+      {
+        "phase": "Phase 1 — Consumer SEO + PR Anchor (Months 1–6)",
+        "objective": "Establish Farmmap as the authoritative farm shop and honesty box directory in UK and Irish search results. Reach 40,000 monthly visitors by Month 6.",
+        "key_actions": [
+          "'Britain's honesty boxes mapped for the first time' — PR pitch to Guardian Rural, BBC Countryfile, Farmers Weekly, Delicious Magazine",
+          "yourhonestybox.com partnership announcement as credibility anchor",
+          "953 listing pages with JSON-LD LocalBusiness structured data from Day 1",
+          "County guide articles targeting long-tail queries from Month 1"
+        ]
+      },
+      {
+        "phase": "Phase 2 — Traffic-Triggered Farm Shop Owner Acquisition (Months 3–12)",
+        "objective": "Convert traffic evidence into Bronze subscribers. Target 25–45 paying Bronze shops by Month 12.",
+        "key_actions": [
+          "Automated traffic-triggered email when listing crosses 50 views/30 days",
+          "FRA partnership activation — warm referral at 3× conversion rate",
+          "Agricultural show presence (Balmoral, Royal Highland, county shows) from Month 3"
+        ]
+      },
+      {
+        "phase": "Phase 3 — Bronze Monetisation at Scale (Months 6–18)",
+        "objective": "Reach 100 paying Bronze subscribers — the gate for portfolio engine investment.",
+        "key_actions": [
+          "90-day trial for first 50 Bronze subscribers",
+          "Analytics dashboard optimised as the conversion lever",
+          "TractorMap waitlist landing page live (demand signal for portfolio)"
+        ]
+      },
+      {
+        "phase": "Phase 4 — Silver Marketplace + Portfolio (Month 18+)",
+        "objective": "Launch Silver marketplace; prove second vertical.",
+        "key_actions": [
+          "Silver activated for Bronze shops with 20+ waitlist sign-ups",
+          "Waitlist subscribers receive automated launch email on Silver activation day",
+          "TractorMap waitlist → second vertical build decision at 100 Bronze gate"
+        ]
+      }
+    ]
+  },
+
+  "slide_8_competition": {
+    "headline": "Weak incumbents. Clear differentiation. 18-month execution window.",
+    "competitive_summary": "The farm shop directory space is structurally fragmented with no single competitor offering the full Farmmap proposition: map-first, farm shops + honesty boxes, UK + Ireland, free browse + subscription + marketplace.",
+    "key_competitors": [
+      {
+        "name": "BigBarn",
+        "threat_level": "3/5",
+        "weakness": "£45k net assets; 24-year technical debt; desktop-first; no honesty boxes; no Ireland; no marketplace"
+      },
+      {
+        "name": "FRA Directory",
+        "threat_level": "4/5 (if not partnered)",
+        "weakness": "Member-gated; 2,300+ non-member shops invisible; not map-first; trade body pace not product pace; target for partnership not competition"
+      },
+      {
+        "name": "yourhonestybox.com",
+        "threat_level": "Partner",
+        "weakness": "Ireland/NI only; no commercial model; no UK scope; formal partnership in progress"
+      },
+      {
+        "name": "Google Maps",
+        "threat_level": "2/5",
+        "weakness": "Generic platform; 43% of farm shop data incorrect/stale; no honesty box category; no product catalogue; no marketplace; not browsable for category exploration"
+      }
+    ],
+    "moat": "farmmap.co.uk exact-match domain (unacquirable); 953-listing head start (12–18 months to replicate); yourhonestybox.com data partnership; FRA endorsement opportunity; multi-tenant engine"
+  },
+
+  "slide_9_financials": {
+    "headline": "Bootstrap to break-even. Portfolio to scale.",
+    "funding_requirement": "£5,000 personal capital at launch. No external funding required to reach break-even.",
+    "key_milestones": [
+      "Month 6: 40,000 monthly visitors; 10+ claimed listings; first Bronze subscribers",
+      "Month 12: 9+ paying Bronze shops; 100k monthly visitor target; FRA partnership active",
+      "Month 18: 100 paying Bronze subscribers (portfolio engine gate); Silver marketplace live",
+      "Month 24: 30+ Silver shops; £15,000+ monthly GMV; TractorMap second vertical decision",
+      "Month 36: 57 Bronze + 33 Silver + 10 Gold; £60,100 annual revenue; break-even trajectory confirmed",
+      "Month 42–48: Break-even (all operating costs including founder salary covered)"
+    ],
+    "three_year_summary": {
+      "year1_revenue_gbp": 1360,
+      "year2_revenue_gbp": 11292,
+      "year3_revenue_gbp": 60100,
+      "year3_gross_margin_percent": 93,
+      "break_even_month": "42–48 (base case)"
+    },
+    "upside_scenario": "At 8%+ Bronze conversion and FRA partnership active: break-even by Month 30–36; 100 Bronze subscribers by Month 12; TractorMap launched Month 18; portfolio Year 5 revenue £2.2m",
+    "downside_scenario": "At 3% Bronze conversion: Year 3 revenue ~£26k; break-even Month 60+; angel seed evaluation triggered at Month 9"
+  },
+
+  "slide_10_team": {
+    "headline": "Single founder with full product-to-market capability",
+    "founder": {
+      "name": "Stu Fosks",
+      "role": "Founder",
+      "background": "Product and technology background; agent-foundry methodology architect; architecture, specification, and build oversight capability across the full product stack",
+      "capability_gap": "Content and moderation at scale — addressed with part-time content/moderation contractor from Month 20, funded from Bronze revenue"
+    },
+    "advisors_and_partners": [
+      "yourhonestybox.com (data partner, Ireland/NI)",
+      "FRA (target partnership — warm referral channel for Bronze acquisition)"
+    ],
+    "first_hire": {
+      "role": "Part-time content and moderation contractor",
+      "timing": "Month 20",
+      "annual_cost_gbp": 12000,
+      "funded_from": "Bronze subscription revenue at ~30+ subscribers"
+    }
+  },
+
+  "slide_11_portfolio_thesis": {
+    "headline": "Farmmap is the proof-of-concept for a portfolio of map-first directories",
+    "portfolio_thesis": "The farm shop discovery gap is not unique to farm shops. The same problem — locally-operated, discovery-deficient businesses with no central digital presence — exists across marinas, campsites, coarse fisheries, craft breweries, and independent forecourts. The multi-tenant architecture means each additional vertical costs £15,000–£25,000 in incremental investment once Farmmap's engine is proven.",
+    "verticals": [
+      {"name": "Farmmap", "market": "Farm shops + honesty boxes", "year5_revenue_base_gbp": 450000},
+      {"name": "BrewMap", "market": "~2,500 UK craft breweries", "year5_revenue_base_gbp": 315000},
+      {"name": "CampingMap", "market": "~4,000 UK licensed campsites", "year5_revenue_base_gbp": 540000},
+      {"name": "BerthMap", "market": "~350 UK marinas", "year5_revenue_base_gbp": 135000},
+      {"name": "FishMap", "market": "~4,000 UK coarse fisheries", "year5_revenue_base_gbp": 360000},
+      {"name": "ForecourtMap", "market": "~3,500 independent petrol stations", "year5_revenue_base_gbp": 225000},
+      {"name": "TractorMap", "market": "~1,500 agricultural machinery dealers", "year5_revenue_base_gbp": 180000}
+    ],
+    "portfolio_year5_total_gbp": 2205000,
+    "portfolio_multiplier": 4.9,
+    "enterprise_value_at_5x_gbp": 11025000,
+    "gate_condition": "100 paying Bronze subscribers on Farmmap before engine generalisation investment begins (viability-gate.md condition: poc-before-engine)"
+  },
+
+  "slide_12_ask": {
+    "headline": "Bootstrap to 100 Bronze subscribers. Then the engine pays for itself.",
+    "current_stage": "Pre-launch — spec v1.0.0 signed off, architecture complete, build plan ready. 953 verified listings. yourhonestybox.com partnership confirmed.",
+    "funding_model": "Bootstrap at launch with £5,000 personal capital. Innovate UK SMART grant application in Q2 Year 1 as non-dilutive accelerant. Angel seed only if downside case confirmed at Month 9.",
+    "what_success_looks_like": "Month 12: 100,000 monthly visitors, 9+ Bronze subscribers, FRA partnership active. Month 18: 100 Bronze subscribers (portfolio engine gate reached). Month 24: Silver marketplace live, TractorMap second vertical launched.",
+    "investor_ask_if_seeking_seed": {
+      "amount_gbp": "100000–250000",
+      "use_of_funds": "Accelerate Bronze subscriber growth beyond bootstrap trajectory; fund content programme at 3× velocity; support second vertical build; enable founder salary from Year 1",
+      "note": "Angel seed not being actively sought at launch. Deck available for investor conversations if interest arises post-V1 launch with traffic data."
+    }
+  }
+}

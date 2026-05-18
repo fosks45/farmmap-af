@@ -1,0 +1,216 @@
+{
+  "customer_segments": [
+    {
+      "segment": "Consumer — Weekend Forager (P1)",
+      "description": "ABC1 adults aged 35–65, rural or semi-rural access, mobile-first behaviour, food provenance values. Browses map without login for impulse discovery and pre-trip planning.",
+      "size_indicator": "22.3 million UK adults who value local food (FSA Food and You 2, Wave 7, 2024); approximately 14.3 million across UK+Ireland"
+    },
+    {
+      "segment": "Consumer — Ethical Foodie (P2)",
+      "description": "Urban or peri-urban adults 18–35, digital-native, seeks local food sources. Future online ordering customer for V3.",
+      "size_indicator": "FARMA: farmers' market footfall grew 12% in 2023, driven by 18–35 attendance"
+    },
+    {
+      "segment": "Farm Shop Owner — Reluctant Digitaliser (P3)",
+      "description": "Owner-operator aged 50–70, low digital sophistication, sceptical of directories. Primary Bronze conversion target once traffic evidence available.",
+      "size_indicator": "2,310 UK farm shops with no web presence (FRA Digital Adoption Survey 2022)"
+    },
+    {
+      "segment": "Farm Shop Owner — Digital-Native Entrepreneur (P4)",
+      "description": "Digitally engaged owner aged 30–45, already on Shopify/Instagram, seeking new customer acquisition. Early Bronze and Silver adopter.",
+      "size_indicator": "Approximately 1,020 UK farm shops with existing web presence; subset (~400) with e-commerce capability"
+    },
+    {
+      "segment": "Cooperative / Organisation (P6)",
+      "description": "Cooperative manager claiming multiple listings under one organisational identity. Future enterprise tier signal.",
+      "size_indicator": "B2B signal; not primary V1 segment"
+    }
+  ],
+  "value_propositions": [
+    {
+      "for": "Consumers",
+      "proposition": "Browse every farm shop and honesty box across the UK and Ireland on a single map — no login, no fee — and discover local food you did not know existed within driving distance."
+    },
+    {
+      "for": "Farm shop owners (Free tier)",
+      "proposition": "Permanent free listing on the map — no trial period, no credit card, no fee expiry. Be discoverable to consumers passing your area even if you have no website."
+    },
+    {
+      "for": "Farm shop owners (Bronze tier)",
+      "proposition": "A fully branded shop presence — logo, photos, product catalogue, enquiry form, performance dashboard, verified badge — for £20/month. Demonstrably cheaper than Yell; more attributable than Facebook."
+    },
+    {
+      "for": "Farm shop owners (Silver tier)",
+      "proposition": "A complete online marketplace for £60/month plus 3% commission. No Shopify setup, no Google Ads spend; the Farmmap consumer audience is included."
+    },
+    {
+      "for": "Farm shop owners (Gold tier)",
+      "proposition": "Silver plus a done-for-you marketing service (newsletter feature, weekly social posts, homepage placement, quarterly blog post) for £100/month plus 5% commission."
+    }
+  ],
+  "channels": [
+    {
+      "channel": "Organic search (SEO)",
+      "type": "Consumer acquisition",
+      "description": "farmmap.co.uk exact-match domain + 953 indexed listing pages + county landing pages + editorial content programme targeting 'farm shop near me' and related queries. Primary consumer acquisition channel."
+    },
+    {
+      "channel": "FRA partnership / referral",
+      "type": "Farm shop owner acquisition (warm)",
+      "description": "Data-sharing or endorsement arrangement with the Farm Retail Association providing introduction to 1,200 member businesses. Estimated 3× conversion uplift vs cold outreach."
+    },
+    {
+      "channel": "Traffic-triggered email",
+      "type": "Farm shop owner acquisition (automated)",
+      "description": "Automated email to unclaimed listing owner once listing reaches threshold traffic (100+ monthly sessions). Shows traffic evidence before asking for Bronze upgrade. CAC approximately £85."
+    },
+    {
+      "channel": "Personal rep visits",
+      "type": "Farm shop owner acquisition (high-touch)",
+      "description": "In-person outreach for high-priority Bronze targets (farm shows, targeted county visits). 20–30% conversion; CAC approximately £190."
+    },
+    {
+      "channel": "yourhonestybox.com partnership",
+      "type": "Consumer + owner acquisition (Ireland/NI)",
+      "description": "Co-branded honesty box listings in Ireland and Northern Ireland via data-sharing arrangement. Provides Irish market credibility without independent consumer acquisition."
+    },
+    {
+      "channel": "Direct / word of mouth",
+      "type": "Consumer acquisition (organic)",
+      "description": "Farm shop owners sharing their Farmmap listing pages; social sharing by consumers discovering honesty boxes."
+    }
+  ],
+  "customer_relationships": [
+    {
+      "segment": "Consumer",
+      "type": "Self-serve / anonymous",
+      "description": "No login required for map browsing. Optional account creation for reviews and order history. Relationship is with the product, not with a human."
+    },
+    {
+      "segment": "Bronze shop owner",
+      "type": "Self-serve + light-touch support",
+      "description": "Onboarding is self-serve. Support via email for dashboard questions. Analytics dashboard is the primary ongoing relationship touchpoint."
+    },
+    {
+      "segment": "Silver/Gold shop owner",
+      "type": "Managed onboarding + ongoing relationship",
+      "description": "Stripe Connect onboarding requires more guidance. Gold tier includes managed marketing service (newsletter, social). Ongoing account management relationship."
+    },
+    {
+      "segment": "FRA / yourhonestybox.com",
+      "type": "Institutional partnership",
+      "description": "Formal data-sharing or co-marketing agreement. Founder-level relationship."
+    }
+  ],
+  "revenue_streams": [
+    {
+      "stream": "Bronze subscription",
+      "model": "Flat monthly recurring",
+      "price": "£20/month (£240/year)",
+      "note": "Primary revenue stream at V2 launch; low CAC ceiling requires traffic evidence to convert"
+    },
+    {
+      "stream": "Silver subscription",
+      "model": "Flat monthly + percentage commission",
+      "price": "£60/month + 3% commission on orders ≥ £20",
+      "note": "Attractive once Farmmap drives ≥£1,500/month GMV per shop"
+    },
+    {
+      "stream": "Gold subscription",
+      "model": "Flat monthly + percentage commission",
+      "price": "£100/month + 5% commission on orders ≥ £30",
+      "note": "Commission cap above £8,000/month GMV to be designed before V3 launch"
+    },
+    {
+      "stream": "Campaign add-ons (Bronze)",
+      "model": "One-off per-campaign",
+      "price": "£50/campaign (newsletter feature or social post)",
+      "note": "Done-for-you output; requires content team delivery capacity"
+    }
+  ],
+  "key_resources": [
+    "farmmap.co.uk exact-match domain (durable SEO asset; unacquirable by competitors)",
+    "953 verified seed listings (map density at launch; no cold-start)",
+    "yourhonestybox.com consent partnership (336 Irish/NI listings; community credibility)",
+    "Next.js + Supabase/PostGIS + Stripe Connect Standard technology stack (fully specified)",
+    "Multi-tenant directory engine (low incremental cost per additional vertical: £15,000–25,000)",
+    "FRA data relationship (target — not yet secured; highest-leverage pre-launch asset)",
+    "Founder technical capability (spec, architecture, build oversight)"
+  ],
+  "key_activities": [
+    "Build and launch V1 free directory (8-sprint plan; 80 tasks)",
+    "SEO content programme (county guides, long-tail landing pages, schema.org markup)",
+    "Farm shop owner acquisition programme (FRA partnership, traffic-triggered email, rep visits)",
+    "Listing moderation and quality assurance (photo review, claim verification, data quality)",
+    "Bronze tier conversion (analytics dashboard evidence → upgrade conversation)",
+    "V3 marketplace build (Silver/Gold ordering, Stripe Connect onboarding, allergen compliance)",
+    "Portfolio engine launch (second vertical after 100 Bronze subscribers confirmed)"
+  ],
+  "key_partners": [
+    {
+      "partner": "yourhonestybox.com",
+      "type": "Data partner (consent confirmed; formal agreement recommended)",
+      "value_exchange": "Farmmap gets 336 Irish/NI listings + community credibility; yourhonestybox.com gets commercial model and UK reach"
+    },
+    {
+      "partner": "Farm Retail Association (FRA)",
+      "type": "Target — data-sharing / endorsement (not yet secured)",
+      "value_exchange": "FRA members get better digital product; Farmmap gets 1,200-member warm referral channel and listing data"
+    },
+    {
+      "partner": "Stripe",
+      "type": "Payment infrastructure",
+      "value_exchange": "Stripe processes subscriptions and marketplace payments; Farmmap avoids FCA payment institution registration"
+    },
+    {
+      "partner": "Supabase",
+      "type": "Database and auth infrastructure",
+      "value_exchange": "Managed PostgreSQL + PostGIS + Auth at low cost; Supabase gets a case study directory business"
+    },
+    {
+      "partner": "Vercel",
+      "type": "Hosting and edge infrastructure",
+      "value_exchange": "Next.js-optimised global edge hosting; Farmmap gets SSR + CDN at low variable cost"
+    },
+    {
+      "partner": "OpenStreetMap / MapLibre",
+      "type": "Map data and rendering",
+      "value_exchange": "Open map data + open-source rendering; Farmmap avoids Google Maps API variable cost exposure"
+    }
+  ],
+  "cost_structure": [
+    {
+      "cost": "Infrastructure (Supabase, Vercel, email, monitoring)",
+      "type": "Fixed variable — scales with usage",
+      "estimate": "£0 (Supabase free tier at launch) → £70/month at scale"
+    },
+    {
+      "cost": "Stripe fees",
+      "type": "Variable — percentage of revenue",
+      "estimate": "1.5% + 20p on subscriptions; 0.25% Stripe Connect application fee on marketplace GMV"
+    },
+    {
+      "cost": "Founder time (content, moderation, sales)",
+      "type": "Opportunity cost at bootstrap stage",
+      "estimate": "Solo at launch; estimated 30–40 hrs/week across all functions"
+    },
+    {
+      "cost": "Agricultural show presence (Year 2)",
+      "type": "Sales and marketing",
+      "estimate": "£1,500–3,000/year for stand and travel"
+    },
+    {
+      "cost": "Legal (privacy policy, EU GDPR rep, ToS, allergen opinion)",
+      "type": "One-off setup",
+      "estimate": "£2,000–5,000 (estimated pre-launch legal costs)"
+    }
+  ],
+  "untested_assumptions": [
+    "6% free-to-Bronze conversion rate of claimed listings (high-risk assumption; most sensitive variable in the model)",
+    "30% Bronze-to-Silver progression after 6+ months (directional; no comparable data from UK farm shop directories)",
+    "Silver average GMV of £800–£1,800/month per shop (unvalidated; comparable Shopify farm shop data unavailable)",
+    "100,000 monthly consumer visitors within 12 months of V1 (dependent on SEO content programme execution)",
+    "FRA partnership secured before or at V1 launch (critical for Bronze conversion; not yet confirmed)",
+    "Farm shop owner digital fatigue can be overcome with traffic evidence (correct framing, but field validation needed)"
+  ]
+}
